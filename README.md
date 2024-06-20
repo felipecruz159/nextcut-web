@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Template de Front-end
 
-## Getting Started
+O template é direcionado a todos que desejam iniciar um front-end com algumas funcionalidades já previamente implementadas.
 
-First, run the development server:
+## 🚀 Funcionalidades
+
+- 🌐 Axios - Biblioteca para requisições HTTP.
+- 🎨 shadcn-ui - Biblioteca de componentes UI para React.
+- 📅 date-fns - Biblioteca para manipulação de datas.
+- 📝 react-hook-form - Biblioteca para manipulação de formulários em React.
+
+
+##⚙️ Instalação
+
+Para instalar as dependências, utilize um dos seguintes comandos:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- npm install
+- yarn
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🪄 Uso
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Para inicializar o projeto, utilize um dos seguintes comandos:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```bash
+- yarn dev
+- npm run dev
+```
 
-## Learn More
+Após inicializado, para rodar as migrations utilize um dos seguintes comandos:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+- yarn prisma migrate dev
+- npx prisma migrate dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Para gerar o seed, utilize um dos seguintes comandos:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+- yarn prisma db seed
+- npx prisma db seed
+```
 
-## Deploy on Vercel
+Para gerar o DER (Diagrama de Entidade-Relacionamento), utilize um dos seguintes comandos:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+- yarn prisma generate
+- npx prisma generate
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Para visualizar e manipular os dados das tabelas, utilize um dos seguintes comandos:
+
+```bash
+- yarn prisma studio
+- npx prisma studio
+```
+
+Para rodar os testes, utilize um dos seguintes comandos:
+
+```bash
+- yarn test
+- npm run test
+```
