@@ -1,5 +1,5 @@
 import { Button } from "@/app/_components/ui/button";
-import { Card, CardContent } from "../../_components/ui/card";
+import { Card, CardContent } from "../../../_components/ui/card";
 import { DoorOpen } from 'lucide-react';
 
 const HeaderSingin = () => {
