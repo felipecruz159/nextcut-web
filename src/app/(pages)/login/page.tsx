@@ -1,12 +1,12 @@
 "use client";
 import Image from "next/image";
-import { Input } from "../../_components/ui/input";
-import { Label } from "../../_components/ui/label";
-import { PasswordInput } from "../../_components/ui/password-input";
+import { Input } from "@ui/input";
+import { Label } from "@ui/label";
+import { PasswordInput } from "@ui/password-input";
 import { useState } from "react";
-import { Checkbox } from "@/app/_components/ui/checkbox";
+import { Checkbox } from "@ui/checkbox";
 import Link from "next/link";
-import { Button } from "../../_components/ui/button";
+import { Button } from "@ui/button";
 export default function Login() {
   const [password, setPassword] = useState<string>("");
   return (
