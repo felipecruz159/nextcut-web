@@ -5,6 +5,8 @@ import { axiosInstance } from "../../_helpers/axios-instance";
 import HeaderSingin from "./_components/header-singin";
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import Search from "./_components/search";
+import Categories from "./categories";
 
 export default function Home() {
   const [barbershop, setBarbershop] = useState([])
@@ -28,8 +30,8 @@ export default function Home() {
             locale: ptBR
           })}</p>
           <p className=""></p>
-          <div className="px-5 mt-6">
-            {/* TODO: Make input seach */}
+          <div className=" mt-6">
+            <Search />
           </div>
         </div>
 
@@ -39,8 +41,9 @@ export default function Home() {
         </div>
       </div>
 
-      <div>
 
+      <div className="flex flex-row gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden px-5 mt-6">
+        <Categories />
       </div>
     </div>
   );
