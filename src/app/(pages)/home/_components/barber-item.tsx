@@ -1,8 +1,11 @@
+'use client'
 import { Badge } from "@/app/_components/ui/badge";
 import { Button } from "@/app/_components/ui/button";
 import Image from "next/image";
 import { Card, CardContent } from "@/app/_components/ui/card";
 import { Star, Heart } from "lucide-react";
+import { useRouter } from "next/navigation";
+
 
 interface BarberItemProps {
    barber: {
@@ -14,6 +17,12 @@ interface BarberItemProps {
 };
 
 const BarberItem = ({ barber }: BarberItemProps) => {
+
+   const route = useRouter()
+   const handleBarberDetails = () => {
+      route.push(`barber-details/${barber.id}`)
+   }
+
    return (
       <Card className="max-w-[159px] min-w-[159px] w-full md:max-2-[300px] md:min-w-[300px]">
          <CardContent className=" p-1 rounded-xl">
@@ -29,7 +38,7 @@ const BarberItem = ({ barber }: BarberItemProps) => {
             </div>
             <div className="p-2 gap-2 grid grid-cols-3 md:grid-cols-4">
                <div className="col-span-2 md:col-span-3" >
-                  <Button className="w-full" variant={"secondary"}>Reservar</Button>
+                  <Button className="w-full" onClick={handleBarberDetails} variant={"secondary"}>Reservar</Button>
                </div>
                <div className="flex justify-center">
                   <Button size={"icon"} variant={"ghost"} className="rounded-full" ><Heart size={18} /></Button>

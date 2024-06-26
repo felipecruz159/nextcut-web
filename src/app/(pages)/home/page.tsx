@@ -6,14 +6,14 @@ import HeaderSingin from "./_components/header-singin";
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import Search from "./_components/search";
-import Categories from "./categories";
+import Categories from "./_components/categories";
 import BarberItem from './_components/barber-item';
 
 export default function Home() {
   const [barbershop, setBarbershop] = useState([])
 
   useEffect(() => {
-    axiosInstance.get('barbershop').then((res) => {
+    axiosInstance.get('barbershop/').then((res) => {
       setBarbershop(res.data)
     }).catch((err) => {
       console.log(err)
