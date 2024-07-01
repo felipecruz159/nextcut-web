@@ -2,12 +2,13 @@
 const axios = require('axios');
 import { useEffect, useState } from "react";
 import { axiosInstance } from "../../_helpers/axios-instance";
-import HeaderSingin from "./_components/header-singin";
+import Header from "../../_components/header";
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import Search from "./_components/search";
 import Categories from "./_components/categories";
 import BarberItem from './_components/barber-item';
+import BookingItem from "./_components/booking";
 
 export default function Home() {
   const [barbershop, setBarbershop] = useState([])
@@ -22,9 +23,9 @@ export default function Home() {
 
   return (
     <div>
-      <HeaderSingin />
+      <Header />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 md:container mx-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 grid-rows-2 md:container mx-5 mt-6 gap-x-4">
         <div className="mt-4 ">
           <h2 className="text-xl font-light">Olá, faça seu login</h2>
           <p className="capitalize text-muted-foreground text-sm">{format(new Date(), "EEEE',' d 'de' MMMM", {
@@ -37,15 +38,15 @@ export default function Home() {
         </div>
 
         {/* Card hidden below the "md" splint */}
-        <div className="hidden md:flex">
-          {/* TODO: Make card carousel */}
+        <div className=" md:w-full row-span-2 content-center mt-2 md:mt-0">
+          <BookingItem />
         </div>
-      </div>
 
-      <div className="mt-6 px-5 md:container">
-        <h2 className="uppercase text-base text-muted-foreground mb-3">Categorias</h2>
-        <div className="flex flex-row gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden ">
-          <Categories />
+        <div className="mt-4">
+          <h2 className="uppercase text-base text-muted-foreground mb-3">Categorias</h2>
+          <div className="flex flex-row gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden ">
+            <Categories />
+          </div>
         </div>
       </div>
 

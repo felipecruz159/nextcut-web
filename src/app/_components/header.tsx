@@ -2,7 +2,7 @@ import { Button } from "@/app/_components/ui/button";
 import { Card, CardContent } from "@ui/card";
 import { DoorOpen } from 'lucide-react';
 
-const HeaderSingin = () => {
+const Header = () => {
    return (
       <Card className="rounded-none">
          <CardContent className="flex justify-between pb-0 py-6">
@@ -15,4 +15,4 @@ const HeaderSingin = () => {
    );
 }
 
-export default HeaderSingin;
+export default Header;
