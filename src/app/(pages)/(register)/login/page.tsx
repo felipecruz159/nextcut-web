@@ -1,17 +1,12 @@
 "use client";
 import Image from "next/image";
-import { Input } from "@ui/input";
-import { Label } from "@ui/label";
-import { PasswordInput } from "@ui/password-input";
-import { useState } from "react";
-import { Checkbox } from "@ui/checkbox";
 import Link from "next/link";
-import { Button } from "@ui/button";
+import { Button } from "@ui/button"; 
+import LoginForm from "./login-form";
 export default function Login() {
-  const [password, setPassword] = useState<string>("");
   return (
-    <>
-    { /**
+    <div className="h-screen flex justify-center flex-col">
+{ /**
        * TODO: Add path to <Link> element 
        * TODO: Authenticate to Next Auth
        */ }
@@ -24,45 +19,8 @@ export default function Login() {
           className="w-2/5 max-w-36"
         />
       </div>
-      <form method="" className="container mt-4">
-        <div className="my-2">
-          <Label htmlFor="email">Email</Label>
-          <Input type="email" id="email" placeholder="Email" />
-        </div>
-
-        <div className="my-2">
-          <Label htmlFor="password">Senha</Label>
-          <PasswordInput
-            id="password"
-            placeholder="Senha"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-
-        <div className="my-2 flex items-center gap-1 justify-between">
-          <div className="flex items-center gap-1">
-            <Checkbox id="rememberMe" />
-            <label
-              htmlFor="rememberMe"
-              className="text-xs leading-none font-light"
-            >
-              Lembrar de mim
-            </label>
-          </div>
-          <div>
-            <Button variant="link" className="text-xs font-light p-0">
-              <Link href="recover-password">Esqueceu a senha?</Link>
-            </Button>
-          </div>
-        </div>
-
-        <div className="my-2 ">
-          <Button asChild className="w-full">
-            <Link href="">Entrar</Link>
-          </Button>
-        </div>
-      </form>
+      
+      <LoginForm />
 
       <div className="container flex justify-center items-center">
         <div className="h-px w-full bg-border"></div>
@@ -100,6 +58,7 @@ export default function Login() {
       { /**
        * TODO: Add language component
        */ }
-    </>
+    </div>
+  
   );
 }

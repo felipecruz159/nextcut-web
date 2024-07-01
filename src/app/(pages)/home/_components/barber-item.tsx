@@ -1,13 +1,12 @@
 'use client'
-import { Badge } from "@/app/_components/ui/badge";
-import { Button } from "@/app/_components/ui/button";
+import { Badge } from "@ui/badge";
+import { Button } from "@ui/button";
 import Image from "next/image";
-import { Card, CardContent } from "@/app/_components/ui/card";
+import { Card, CardContent } from "@ui/card";
 import { Star, Heart } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-
-interface BarberItemProps {
+interface IBarberItemProps {
    barber: {
       id: string
       name: string,
@@ -16,7 +15,7 @@ interface BarberItemProps {
    }
 };
 
-const BarberItem = ({ barber }: BarberItemProps) => {
+const BarberItem = ({ barber }: IBarberItemProps) => {
 
    const route = useRouter()
    const handleBarberDetails = () => {
