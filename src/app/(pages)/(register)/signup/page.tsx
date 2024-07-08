@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Checkbox } from "@ui/checkbox";
 import Link from "next/link";
 import { Button } from "@ui/button";
-import SignupForm from "./signup-form";
+import SignupForm from "./_components/signup-form";
 export default function SignUp() {
   const [password, setPassword] = useState<string>("");
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");

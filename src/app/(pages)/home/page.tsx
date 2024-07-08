@@ -1,25 +1,14 @@
-'use client'
-const axios = require('axios');
-import { useEffect, useState } from "react";
-import { axiosInstance } from "../../_helpers/axios-instance";
 import Header from "../../_components/header";
-import { format } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import Search from "./_components/search";
 import Categories from "./_components/categories";
-import BarberItem from './_components/barber-item';
 import BookingItem from "./_components/booking";
+import Cards from "./_components/cards";
+import { getServerSession } from "next-auth";
 
-export default function Home() {
-  const [barbershop, setBarbershop] = useState([])
-
-  useEffect(() => {
-    axiosInstance.get('barbershop/').then((res) => {
-      setBarbershop(res.data)
-    }).catch((err) => {
-      console.log(err)
-    })
-  }, [])
+export default async function Home() {
+  const session = await getServerSession();
 
   return (
     <div>
@@ -27,10 +16,17 @@ export default function Home() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 grid-rows-2 md:container mx-5 mt-6 gap-x-4">
         <div className="mt-4 ">
-          <h2 className="text-xl font-light">Olá, faça seu login</h2>
-          <p className="capitalize text-muted-foreground text-sm">{format(new Date(), "EEEE',' d 'de' MMMM", {
-            locale: ptBR
-          })}</p>
+          {session && session.user ? (
+            <h2 className="text-xl font-light">Olá, {session?.user?.name}!</h2>
+          ) : (
+            <h2 className="text-xl font-light">Olá!</h2>
+          )}
+
+          <p className="capitalize text-muted-foreground text-sm">
+            {format(new Date(), "EEEE',' d 'de' MMMM", {
+              locale: ptBR,
+            })}
+          </p>
           <p className=""></p>
           <div className=" mt-6">
             <Search />
@@ -43,21 +39,16 @@ export default function Home() {
         </div>
 
         <div className="mt-4">
-          <h2 className="uppercase text-base text-muted-foreground mb-3">Categorias</h2>
+          <h2 className="uppercase text-base text-muted-foreground mb-3">
+            Categorias
+          </h2>
           <div className="flex flex-row gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden ">
             <Categories />
           </div>
         </div>
       </div>
 
-      <div className="pl-5 mt-6 md:container">
-        <h2 className="uppercase text-base text-muted-foreground mb-3">Ofertas Exclusivas</h2>
-        <div className="flex flex-row gap-3 md:gap-5 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-          {barbershop.map((item: any) => (
-            <BarberItem key={item.id} barber={item} />
-          ))}
-        </div>
-      </div>
+      <Cards />
     </div>
   );
 }

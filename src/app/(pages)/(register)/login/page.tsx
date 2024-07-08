@@ -1,8 +1,7 @@
-"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@ui/button"; 
-import LoginForm from "./login-form";
+import LoginForm from "./_components/login-form";
 export default function Login() {
   return (
     <div className="h-screen flex justify-center flex-col">
