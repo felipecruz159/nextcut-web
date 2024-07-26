@@ -8,7 +8,7 @@ const Cards = () => {
     const [barbershop, setBarbershop] = useState([])
 
     useEffect(() => {
-      axiosInstance.get('barbershop/').then((res) => {
+      axiosInstance.get('/barbershop/').then((res) => {
         setBarbershop(res.data)
       }).catch((err) => {
         console.log(err)

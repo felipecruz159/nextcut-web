@@ -23,7 +23,7 @@ const BarberInfo = ({ params }: { params: string }) => {
    useEffect(() => {
       if (params) {
          setLoading(true);
-         axiosInstance.get(`barberDetails/${params}`)
+         axiosInstance.get(`/barberDetails/${params}`)
             .then((res) => {
                setBarber(res.data);
                setLoading(false);

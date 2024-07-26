@@ -1,3 +1,4 @@
+import { axiosInstance } from "@/app/_helpers/axios-instance";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -13,37 +14,26 @@ const handler = NextAuth({
         password: { label: "Senha", type: "password" },
       },
       async authorize(credentials, req) {
-        // const res = await fetch("/your/endpoint", {
-        //   method: 'POST',
-        //   body: JSON.stringify(credentials),
-        //   headers: { "Content-Type": "application/json" }
-        // })
-        // const user = await res.json()
-
-        // // If no error and we have user data, return it
-        // if (res.ok && user) {
-        //   return user
-        // }
-        // // Return null if user data could not be retrieved
-        // return null
-        
         if (!credentials) {
           return null;
         }
 
-        if (
-          credentials.email === "felipe.cruz159@outlook.com" &&
-          credentials.password === "123"
-        ) {
+        return axiosInstance
+        .post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login`, {
+          email: credentials.email,
+          password: credentials.password,
+        })
+        .then((response) => {
           return {
-            id: "1",
-            name: "Felipe",
-            email: "felipe.cruz159@outlook.com",
+            id: response.data.user.id,
+            name: response.data.user.name,
+            email: response.data.user.email,
           };
-        }
-
-        console.log(credentials);
-        return null;
+        })
+        .catch((error) => {
+          console.log(error.response);
+          throw new Error(error.response.data.message);
+        }) || null;
       },
     }),
   ],
