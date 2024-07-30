@@ -2,8 +2,6 @@ import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import { SearchIcon } from "lucide-react";
 
-Input
-
 const Search = () => {
    return (
       <div className="flex flex-row itmes-center gap-2 ">

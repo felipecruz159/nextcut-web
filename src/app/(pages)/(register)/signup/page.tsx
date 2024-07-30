@@ -14,7 +14,7 @@ export default function SignUp() {
   return (
 
     <div className="h-screen flex flex-col justify-center">
- { /**
+      { /**
        * TODO: Add path to <Link> element 
        * TODO: Authenticate to Next Auth
        */ }
@@ -27,13 +27,13 @@ export default function SignUp() {
           className="w-2/5 max-w-36"
         />
       </div>
-      
+
       <SignupForm />
 
       <p className="text-center text-sm mt-6 font-light">
         Já tem uma conta?{" "}
         <Button variant="link" className="p-0">
-          <Link href="">Entre agora</Link>
+          <Link href="/login">Entre agora</Link>
         </Button>
       </p>
       {/**

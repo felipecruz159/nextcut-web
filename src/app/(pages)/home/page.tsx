@@ -11,8 +11,6 @@ import { getServerSession } from "next-auth";
 export default async function Home() {
   const session = await getServerSession();
 
-  console.log(session);
-
   return (
     <div>
       <Header />
@@ -25,12 +23,23 @@ export default async function Home() {
             <h2 className="text-xl font-light">Olá!</h2>
           )}
 
-          <p className="capitalize text-muted-foreground text-sm">
-            {format(new Date(), "EEEE',' d 'de' MMMM", {
-              locale: ptBR,
-            })}
-          </p>
-          <p className=""></p>
+          <div className="flex">
+            <div>
+              <p className="text-muted-foreground text-sm capitalize">
+                {format(new Date(), "iii", {
+                  locale: ptBR,
+                })}
+              </p>
+            </div>
+            <div>
+              <p className="text-muted-foreground text-sm">
+                {format(new Date(), "',' d 'de' MMMM", {
+                  locale: ptBR,
+                })}
+              </p>
+            </div>
+          </div>
+
           <div className=" mt-6">
             <Search />
           </div>
