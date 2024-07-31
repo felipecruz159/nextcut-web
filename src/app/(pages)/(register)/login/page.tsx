@@ -2,54 +2,61 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@ui/button";
 import LoginForm from "./_components/login-form";
+import { Separator } from "@/app/_components/ui/separator"
+import BackButton from "@/app/_components/ui/backButton";
 export default function Login() {
   return (
-    <div className="h-screen flex justify-center flex-col">
-      { /**
-       * TODO: Add path to <Link> element 
-       */ }
-      <div className="flex justify-center mt-4">
-        <Image
-          src="/logo.png"
-          alt="Logo Nextcut"
-          width={256}
-          height={256}
-          className="w-2/5 max-w-36"
-        />
-      </div>
-
-      <LoginForm />
-
-      <div className="container flex justify-center items-center">
-        <div className="h-px w-full bg-border"></div>
-        <p className="text-nowrap p-2 text-muted-foreground text-xs">
-          ou entrar com
-        </p>
-        <div className="h-px w-full bg-border"></div>
-      </div>
-
-      <div className="flex container ">
-        <Button className="w-full gap-3" variant={"outline"}>
+    <div className="container h-screen grid grid-cols-3 gap-4">
+      <div className="hidden md:block md:col-span-2 place-content-center">
+        <div className="max-w-2xl m-auto">
+          <div className="w-2/4 h-4/5 bg-primary/20 absolute -z-10 rounded-full blur-3xl"></div>
           <Image
-            src="/media-icons/google.svg"
-            alt="Google"
-            width={25}
-            height={25}
-          />
-          Logar com o Google
-        </Button>
+            src="/assets/viewLogin.svg"
+            alt="Imagem Login"
+            objectFit="contain"
+            width={1000}
+            height={1000} />
+        </div>
       </div>
 
-      <p className="text-center text-sm mt-6 font-light">
-        Não tem conta?{" "}
-        <Button variant="link" className="p-0">
-          <Link href="/signup">Cadastre-se</Link>
-        </Button>
-      </p>
-      { /**
-       * TODO: Add language component
-       */ }
-    </div>
+      <div className="col-span-3 md:col-span-1 place-content-center" >
+        <div className="absolute top-6 left-6 ">
+          <BackButton />
+        </div>
+        <div className="flex justify-center mt-4">
+          <Image
+            src="/logo.png"
+            alt="Logo Nextcut"
+            width={256}
+            height={256}
+            className="w-2/5 max-w-36"
+          />
+        </div>
 
+        <LoginForm />
+
+        <div className="flex items-center justify-center w-full my-4">
+          <Separator className="flex-1" />
+          <span className="px-2 text-xs text-muted-foreground whitespace-nowrap">ou entrar com</span>
+          <Separator className="flex-1" />
+        </div>
+
+        <div className="flex">
+          <Button className="w-full gap-3" variant={"outline"}>
+            <Image
+              src="/media-icons/google.svg"
+              alt="Google"
+              width={25}
+              height={25}
+            />
+            Logar com o Google
+          </Button>
+        </div>
+
+        <p className="text-center text-sm my-6 font-light">
+          Não tem conta? <span className="hover:underline underline-offset-4 text-primary"><Link href="/signup">Cadastre-se</Link></span>
+        </p>
+      </div>
+    </div>
   );
 }

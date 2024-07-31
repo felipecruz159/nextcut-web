@@ -1,3 +1,4 @@
+'use client'
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { Input } from "@ui/input";
 import { Label } from "@ui/label";
@@ -67,7 +68,7 @@ export default function SignupForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleSubmitData)} className="container mt-4">
+    <form onSubmit={handleSubmit(handleSubmitData)} className="mt-4">
       {error && <div className="my-4 text-center text-red-500">{error}</div>}
       <div className="my-2">
         <Label htmlFor="name">Nome</Label>

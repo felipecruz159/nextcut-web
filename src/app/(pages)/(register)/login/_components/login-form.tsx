@@ -20,8 +20,8 @@ export default function LoginForm() {
    * @param checked 'on || null'
    * @returns boolean
    */
-  function setCheckbox(checked: any){
-    if(checked === 'on'){
+  function setCheckbox(checked: any) {
+    if (checked === 'on') {
       return true;
     }
     return false;
@@ -43,11 +43,11 @@ export default function LoginForm() {
       ...data,
       callbackUrl: "/home"
     })
-    
+
   };
 
   return (
-    <form onSubmit={login} className="container mt-4">
+    <form onSubmit={login} className="mt-4">
       <div className="my-2">
         <Label htmlFor="email">Email</Label>
         <Input

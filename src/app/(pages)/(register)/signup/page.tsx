@@ -1,45 +1,45 @@
-"use client";
 import Image from "next/image";
-import { Input } from "@ui/input";
-import { Label } from "@ui/label";
-import { PasswordInput } from "@ui/password-input";
-import { useState } from "react";
-import { Checkbox } from "@ui/checkbox";
 import Link from "next/link";
 import { Button } from "@ui/button";
 import SignupForm from "./_components/signup-form";
-export default function SignUp() {
-  const [password, setPassword] = useState<string>("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
-  return (
+import { Separator } from "@/app/_components/ui/separator"
+import BackButton from "@/app/_components/ui/backButton";
 
-    <div className="h-screen flex flex-col justify-center">
-      { /**
-       * TODO: Add path to <Link> element 
-       * TODO: Authenticate to Next Auth
-       */ }
-      <div className="flex justify-center mt-4">
-        <Image
-          src="/logo.png"
-          alt="Logo Nextcut"
-          width={256}
-          height={256}
-          className="w-2/5 max-w-36"
-        />
+export default function SignUp() {
+  return (
+    <div className="container h-screen grid grid-cols-3 gap-4">
+      <div className="col-span-3 md:col-span-1 place-content-center" >
+        <div className="absolute top-6 left-6">
+          <BackButton />
+        </div>
+        <div className="flex justify-center mt-4">
+          <Image
+            src="/logo.png"
+            alt="Logo Nextcut"
+            width={256}
+            height={256}
+            className="w-2/5 max-w-36"
+          />
+        </div>
+
+        <SignupForm />
+
+        <p className="text-center text-sm my-6 font-light">
+          Já tem uma conta? <span className="hover:underline underline-offset-4 text-primary"><Link href="/login">Entrar</Link></span>
+        </p>
       </div>
 
-      <SignupForm />
-
-      <p className="text-center text-sm mt-6 font-light">
-        Já tem uma conta?{" "}
-        <Button variant="link" className="p-0">
-          <Link href="/login">Entre agora</Link>
-        </Button>
-      </p>
-      {/**
-       * TODO: Add language component
-       */}
+      <div className="hidden md:block md:col-span-2 place-content-center">
+        <div className="w-3/5 h-4/5 bg-primary/20 absolute -z-10 rounded-full blur-3xl"></div>
+        <div className="max-w-2xl m-auto">
+          <Image
+            src="/assets/viewLogin.svg"
+            alt="Imagem Login"
+            objectFit="contain"
+            width={1000}
+            height={1000} />
+        </div>
+      </div>
     </div>
-
   );
 }
