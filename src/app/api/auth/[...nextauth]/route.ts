@@ -18,22 +18,25 @@ const handler = NextAuth({
           return null;
         }
 
-        return axiosInstance
-        .post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login`, {
-          email: credentials.email,
-          password: credentials.password,
-        })
-        .then((response) => {
-          return {
-            id: response.data.user.id,
-            name: response.data.user.name,
-            email: response.data.user.email,
-          };
-        })
-        .catch((error) => {
-          console.log(error.response);
-          throw new Error(error.response.data.message);
-        }) || null;
+        try {
+          const response = await axiosInstance.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login`, {
+            email: credentials.email,
+            password: credentials.password,
+          });
+
+          if (response.data && response.data.user) {
+            return {
+              id: response.data.user.id,
+              name: response.data.user.name,
+              email: response.data.user.email,
+            };
+          } else {
+            throw new Error("Erro na resposta do servidor");
+          }
+        } catch (error: any) {
+          const errorMessage = error.response?.data?.error || "Erro de autenticação";
+          throw new Error(errorMessage);
+        }
       },
     }),
   ],
