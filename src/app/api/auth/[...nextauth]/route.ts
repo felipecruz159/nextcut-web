@@ -45,6 +45,47 @@ const handler = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    async signIn({ account, profile }) {
+      if (account?.provider === "google") {
+        const type: string = 'client'
+        try {
+          const response = await axiosInstance.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/google`, {
+            name: profile?.name,
+            email: profile?.email,
+            image: profile?.image,
+
+            token: account?.id_token,
+            provider: account.provider,
+            access_token: account.access_token,
+            expires_at: account.expires_at,
+            token_type: account.token_type,
+            scope: account.scope,
+            session_state: account.session_state,
+            refresh_token: account.refresh_token,
+            providerAccountId: account.providerAccountId,
+            type: type
+          }, {
+            headers: {
+              'Authorization': `Bearer ${account.id_token}`,
+              'Content-Type': 'application/json'
+            },
+          });
+
+          if (response.status === 200) {
+            const { token } = response.data;
+            return token ? true : false;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          console.error("Error during Google sign-in:", error);
+          return false;
+        }
+      }
+      return true;
+    },
+  }
 });
 
 export { handler as GET, handler as POST };
