@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@ui/button";
+
 import LoginForm from "./_components/login-form";
 import { Separator } from "@/app/_components/ui/separator"
 import BackButton from "@/app/_components/ui/backButton";
+import ButtonGoogle from "@/app/_components/buttonGoogle";
+
 export default function Login() {
   return (
     <div className="container h-screen grid grid-cols-3 gap-4">
@@ -42,15 +44,7 @@ export default function Login() {
         </div>
 
         <div className="flex">
-          <Button className="w-full gap-3" variant={"outline"}>
-            <Image
-              src="/media-icons/google.svg"
-              alt="Google"
-              width={25}
-              height={25}
-            />
-            Logar com o Google
-          </Button>
+          <ButtonGoogle />
         </div>
 
         <p className="text-center text-sm my-6 font-light">

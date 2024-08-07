@@ -35,10 +35,6 @@ export default function LoginForm() {
         router.push('work-with-us')
       }
     }
-
-
-
-
   };
 
   return (
