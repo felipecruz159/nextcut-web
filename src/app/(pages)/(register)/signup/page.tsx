@@ -30,8 +30,8 @@ export default function SignUp() {
       </div>
 
       <div className="hidden md:block md:col-span-2 place-content-center">
-        <div className="w-3/5 h-4/5 bg-primary/20 absolute -z-10 rounded-full blur-3xl"></div>
-        <div className="max-w-2xl m-auto">
+        <div className="max-w-2xl m-auto relative">
+          <div className="w-3/5 h-4/5 bg-primary/20 absolute -z-10 rounded-full blur-3xl"></div>
           <Image
             src="/assets/viewLogin.svg"
             alt="Imagem Login"

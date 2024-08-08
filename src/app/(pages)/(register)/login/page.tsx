@@ -10,7 +10,7 @@ export default function Login() {
   return (
     <div className="container h-screen grid grid-cols-3 gap-4">
       <div className="hidden md:block md:col-span-2 place-content-center">
-        <div className="max-w-2xl m-auto">
+        <div className="max-w-2xl m-auto relative">
           <div className="w-2/4 h-4/5 bg-primary/20 absolute -z-10 rounded-full blur-3xl"></div>
           <Image
             src="/assets/viewLogin.svg"
