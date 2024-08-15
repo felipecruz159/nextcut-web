@@ -1,13 +1,14 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@ui/button";
+
 import LoginForm from "./_components/login-form";
 import { Separator } from "@/app/_components/ui/separator";
 import BackButton from "@/app/_components/ui/backButton";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
+import ButtonGoogle from "@/app/_components/buttonGoogle";
 
 export default function Login() {
   // Redirect to home page if already logged in
@@ -23,7 +24,7 @@ export default function Login() {
   return (
     <div className="container h-screen grid grid-cols-3 gap-4">
       <div className="hidden md:block md:col-span-2 place-content-center">
-        <div className="max-w-2xl m-auto">
+        <div className="max-w-2xl m-auto relative">
           <div className="w-2/4 h-4/5 bg-primary/20 absolute -z-10 rounded-full blur-3xl"></div>
           <Image
             src="/assets/viewLogin.svg"
@@ -60,15 +61,7 @@ export default function Login() {
         </div>
 
         <div className="flex">
-          <Button className="w-full gap-3" variant={"outline"}>
-            <Image
-              src="/media-icons/google.svg"
-              alt="Google"
-              width={25}
-              height={25}
-            />
-            Logar com o Google
-          </Button>
+          <ButtonGoogle />
         </div>
 
         <p className="text-center text-sm my-6 font-light">

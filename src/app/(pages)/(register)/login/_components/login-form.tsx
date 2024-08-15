@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { Input } from "@ui/input";
 import { Label } from "@ui/label";
 import { PasswordInput } from "@ui/password-input";
@@ -7,47 +7,39 @@ import Link from "next/link";
 import { Button } from "@ui/button";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-
-// TODO: Remember to add condition to checkbox and make a validation for token expires
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
+  const router = useRouter();
 
-  // * Make it better
-  /**
-   * Function that returns a boolean type of checkbox
-   * @param checked 'on || null'
-   * @returns boolean
-   */
-  function setCheckbox(checked: any) {
-    if (checked === 'on') {
-      return true;
-    }
-    return false;
-  }
-
-  const login = (event: React.FormEvent<HTMLFormElement>) => {
+  const login = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
 
-    let checkbox = setCheckbox(formData.get("rememberMe"));
-
-    const data = {
-      email: formData.get("email"),
-      password: formData.get("password"),
-      checkbox
+    if (!email || !password) {
+      setError('Todos os campos devem ser preenchidos!')
+    } else {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+      if (result?.error) {
+        setError(result.error);
+      } else {
+        toast.success('Bem vindo(a)');
+        setError('');
+        router.push('work-with-us')
+      }
     }
-
-    signIn("credentials", {
-      ...data,
-      callbackUrl: "/home"
-    })
-
   };
 
   return (
     <form onSubmit={login} className="mt-4">
+      {error && <p className="text-red-500 text-center">{error}</p>}
       <div className="my-2">
         <Label htmlFor="email">Email</Label>
         <Input
@@ -55,6 +47,7 @@ export default function LoginForm() {
           id="email"
           name="email"
           placeholder="Email"
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
@@ -82,7 +75,7 @@ export default function LoginForm() {
         </div>
         <div>
           <Button variant="link" className="text-xs font-light p-0">
-            <Link href="recover-password">Esqueceu a senha?</Link>
+            <Link href="/recover-password">Esqueceu a senha?</Link>
           </Button>
         </div>
       </div>
