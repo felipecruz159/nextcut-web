@@ -11,6 +11,7 @@ import { registerUserApi } from "@/app/api/client/register/registerUserApi";
 import { SignupFormData } from "@/app/types/client/typesClient";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 
 export default function SignupForm() {
@@ -61,9 +62,14 @@ export default function SignupForm() {
         passwordConfirmation: "",
         terms: false
       });
+      
       router.push('/login');
     } catch (error) {
-      setError('Erro ao cadastrar usuário!');
+      if (axios.isAxiosError(error) && error.response) {
+        setError(error.response.data.error);
+      } else {
+        setError('Erro ao cadastrar usuário!');
+      }
     }
   };
 
