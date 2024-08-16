@@ -1,8 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@ui/button";
 import SignupForm from "./_components/signup-form";
-import { Separator } from "@/app/_components/ui/separator"
 import BackButton from "@/app/_components/ui/backButton";
 
 export default function SignUp() {

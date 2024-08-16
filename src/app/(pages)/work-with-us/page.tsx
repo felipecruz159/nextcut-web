@@ -21,10 +21,10 @@ const WorkWithUs = () => {
                   <p className="text-xl ">Como um(a) profissional de beleza, você pode ser parceiro(a) NextCut! Ao se juntar à nossa plataforma,você pode expandir sua presença online e aumentar sua visibilidade!</p>
                </div>
                <div className=" flex gap-3 flex-col mt-12 sm:max-w-52 sm:flex-row">
-                  <Button variant={"default"} asChild>
+                  <Button className="order-2 sm:order-1" variant={"outline"} asChild>
                      <Link href='/'>Não tenho interesse</Link>
                   </Button>
-                  <Button className="gap-3" variant={"outline"} asChild>
+                  <Button className="gap-3 order-1 sm:order-2" variant={"default"} asChild>
                      <Link href='/work-with-us/learn-more'>Saiba Mais <ArrowRight size={18} /></Link>
                   </Button>
                </div>
