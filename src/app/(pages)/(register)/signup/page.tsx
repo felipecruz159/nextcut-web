@@ -1,9 +1,23 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
 import SignupForm from "./_components/signup-form";
 import BackButton from "@/app/_components/ui/backButton";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function SignUp() {
+    // Redirect to home page if already logged in
+    const session = useSession();
+    const router = useRouter();
+  
+    useEffect(() => {
+      if (session !== null) {
+        router.push("/home");
+      }
+    });
+    
   return (
     <div className="container h-screen grid grid-cols-3 gap-4">
       <div className="col-span-3 md:col-span-1 place-content-center" >
