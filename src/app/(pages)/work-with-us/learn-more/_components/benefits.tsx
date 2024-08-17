@@ -3,7 +3,8 @@ import { Button } from "@/app/_components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
-import BenefitCard from "./benefit-card";
+import Summary from "./summary";
+
 
 const Benefits = () => {
   const benefitsRef = useRef<HTMLDivElement>(null);
@@ -41,29 +42,11 @@ const Benefits = () => {
           className="object-cover m-auto max-h-[80vh] brightness-50 z-0"
         />
       </div>
-      <div>
-        <h1>Quem somos</h1>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque veniam mollitia, veritatis magni inventore sunt! Architecto eos totam explicabo dignissimos vero earum mollitia magni molestiae, sapiente modi, quidem labore sunt!</p>
-      </div>
-      <hr />
-      <div>
-        <h1>Missão</h1>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque veniam mollitia, veritatis magni inventore sunt! Architecto eos totam explicabo dignissimos vero earum mollitia magni molestiae, sapiente modi, quidem labore sunt!</p>
-      </div>
-      <hr />
-      <div>
-        <h1>Visão</h1>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque veniam mollitia, veritatis magni inventore sunt! Architecto eos totam explicabo dignissimos vero earum mollitia magni molestiae, sapiente modi, quidem labore sunt!</p>
-      </div>
-      <hr />
-      <div>
-        <h1>Valor</h1>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque veniam mollitia, veritatis magni inventore sunt! Architecto eos totam explicabo dignissimos vero earum mollitia magni molestiae, sapiente modi, quidem labore sunt!</p>
-      </div>
-      <div>
-        <h1 ref={benefitsRef}>Benefícios</h1>
-        <BenefitCard />
-      </div>
+      <section className="container mt-4">
+        <h1 className="font-bold md:text-2xl text-lg">Mas primeiro...</h1>
+        <h1 className="font-bold md:text-4xl text-lg mb-4">Conheça a gente</h1>
+        <Summary />
+      </section>
     </>
   );
 };
