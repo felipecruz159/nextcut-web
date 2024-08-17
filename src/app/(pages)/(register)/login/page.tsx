@@ -11,15 +11,6 @@ import { useEffect } from "react";
 import ButtonGoogle from "@/app/_components/buttonGoogle";
 
 export default function Login() {
-  // Redirect to home page if already logged in
-  const session = useSession();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (session !== null) {
-      router.push("/home");
-    }
-  });
 
   return (
     <div className="container h-screen grid grid-cols-3 gap-4">
