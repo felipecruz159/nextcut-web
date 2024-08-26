@@ -1,7 +1,58 @@
 import { Button } from "@/app/_components/ui/button";
 import Image from "next/image";
-
+import { SocialIcon } from "react-social-icons";
+import { Lightbulb, Award, Minus, Link, Shield, UserCheck, Gauge, Eye, Zap } from "lucide-react";
+import Value from "../types/Values";
 const Summary = () => {
+  const paths: string[] = [
+    "https://instagram.com",
+    "https://youtube.com",
+    "https://linkedin.com",
+    "https://x.com/home",
+    "https://www.tiktok.com/pt-BR/",
+  ];
+
+  const mockValues: Value[] = [
+    {
+      name: "Inovação",
+      icon: <Lightbulb />,
+    },
+    {
+      name: "Eficiência",
+      icon: <Gauge />,
+    },
+    {
+      name: "Qualidade",
+      icon: <Award />,
+    },
+    {
+      name: "Simplicidade",
+      icon: <Minus />,
+    },
+    {
+      name: "Conectividade",
+      icon: <Link />,
+    },
+    {
+      name: "Resiliência",
+      icon: <Shield />,
+    },
+    {
+      name: "Foco no Cliente",
+      icon: <UserCheck />,
+    },
+    {
+      name: "Transparência",
+      icon: <Eye />,
+    },
+    {
+      name: "Agilidade",
+      icon: <Zap />,
+    },
+  ];
+
+  const isPathFilled: boolean = paths.length > 0 ? true : false;
+
   return (
     <div className="w-100 container hidden lg:flex">
       <div className="w-2/5 flex-col">
@@ -16,16 +67,25 @@ const Summary = () => {
         </div>
         <div className="flex flex-row w-100 h-3/5 ">
           <div className="w-2/4 flex flex-col">
-            <h1 className="text-center font-bold">Nos siga nas redes!</h1>
-            <div className="flex flex-row text-center h-2/5 items-center">
-              <Button className="w-2/4 bg-black rounded-3xl h-5/6 m-1 p-2 border-transparent">
-                A
-              </Button>
-              <Button className="w-2/4 bg-black rounded-3xl h-5/6 m-1 p-2 border-transparent">
-                B
-              </Button>
+            <h1 className="text-center font-bold text-xl mt-2 mb-2">
+              Nos siga nas redes!
+            </h1>
+            <div className="flex flex-row text-center h-1/5 items-center justify-center flex-wrap gap-1 mb-2">
+              {paths.map((path: string) => {
+                return (
+                  <Button className="w-1/4 bg-black rounded-xl h-3/6 p-0 border-transparent">
+                    <SocialIcon
+                      url={path}
+                      key={path}
+                      bgColor="none"
+                      style={{ width: 30 }}
+                      target="_blank"
+                    />
+                  </Button>
+                );
+              })}
             </div>
-            <div className="h-3/5 bg-black rounded-3xl m-1 p-2 border-transparent">
+            <div className="h-4/5 bg-black rounded-3xl m-1 p-2 border-transparent">
               <h1 className="font-bold md:text-xl ps-1 pt-2">Item 3</h1>
               <p className="font-light ps-1 pb-2 text-xs">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima,
@@ -36,35 +96,34 @@ const Summary = () => {
             </div>
           </div>
           <div className="w-2/4 bg-primary rounded-3xl m-1 p-2 border-transparent flex flex-col items-center">
-            <h1 className="font-bold text-wrap text-lg flex align-start">
-              Contamos com mais de...
-            </h1>
             <div className="flex-grow flex flex-col items-center justify-center w-full">
-              <h1 className="font-bold text-center text-5xl">0</h1>
-              <p className="text-base">Estabelecimentos</p>
+              <h1 className="font-bold text-center text-5xl">0+</h1>
+              <p className="text-base text-center">Estabelecimentos cadastrados</p>
             </div>
           </div>
         </div>
       </div>
       <div className="w-3/5 flex flex-col">
         <div className="flex flex-row ">
-          <div className="w-2/4 flex flex-col justify-between bg-black rounded-3xl m-1 p-2 border-transparent">
-            <h1 className="font-bold md:text-xl ps-1 pt-2">Nossa história</h1>
-            <p className="font-light ps-1 pb-2 text-xs">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima,
-              beatae perferendis earum tempore cumque consequuntur accusantium,
-              ipsa accusamus reprehenderit laudantium tenetur dolorum dolore
-              facere veritatis in, animi velit eius at. Lorem ipsum dolor sit
-              amet consectetur adipisicing elit. Ipsam aliquid magnam debitis
-              non quasi voluptatum quae nihil, esse repellat accusantium, harum
-              dolores eius facere error dicta unde dolor, impedit velit? Lorem,
-              ipsum dolor sit amet consectetur adipisicing elit. Officia,
-              fugiat. Assumenda vel doloremque itaque aliquid, blanditiis rerum
-              ullam nesciunt distinctio tempore sed dolores temporibus, harum
-              velit aspernatur suscipit incidunt iure?
-            </p>
+          <div className="w-2/4 flex flex-col justify-between bg-black rounded-3xl m-1 p-2 border-transparent font-light ps-1 pb-2 text-xs">
+            <h1 className="font-bold md:text-xl ps-1 pt-2 mb-2">
+              Nossos valores
+            </h1>
+            {/* // TODO: Responsive to smaller screens */}
+            <div className="flex flex-wrap justify-evenly gap-1">
+              {mockValues.map((value: Value) => {
+                return (
+                  <Button className="bg-black w-28 h-24 text-wrap border border-muted flex flex-col">
+                    <div className="m-2">
+                      {value.icon}
+                    </div>
+                    <p>{value.name}</p>
+                  </Button>
+                );
+              })}
+            </div>
           </div>
-          <div className="flex flex-col w-2/4 h-[300px]">
+          <div className="flex flex-col w-2/4">
             <div className="flex flex-col justify-between h-2/4 bg-black rounded-3xl m-1 p-2 border-transparent">
               <h1 className="font-bold md:text-xl ps-1 pt-2">Missão</h1>
               <p className="font-light ps-1 pb-2 text-xs">

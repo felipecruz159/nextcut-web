@@ -43,7 +43,7 @@ const Benefits = () => {
         />
       </div>
       <section className="container mt-4">
-        <h1 className="font-bold md:text-2xl text-lg">Mas primeiro...</h1>
+        <h1 className="font-bold md:text-2xl text-lg text-primary">Mas primeiro...</h1>
         <h1 className="font-bold md:text-4xl text-lg mb-4">Conheça a gente</h1>
         <Summary />
       </section>
