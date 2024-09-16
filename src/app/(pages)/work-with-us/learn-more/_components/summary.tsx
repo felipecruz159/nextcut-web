@@ -1,7 +1,18 @@
 import { Button } from "@/app/_components/ui/button";
 import Image from "next/image";
 import { SocialIcon } from "react-social-icons";
-import { Lightbulb, Award, Minus, Link, Shield, UserCheck, Gauge, Eye, Zap } from "lucide-react";
+import Link from "next/link";
+import {
+  Lightbulb,
+  Award,
+  Minus,
+  Link as LinkIcon,
+  Shield,
+  UserCheck,
+  Gauge,
+  Eye,
+  Zap,
+} from "lucide-react";
 import Value from "../types/Values";
 const Summary = () => {
   const paths: string[] = [
@@ -31,7 +42,7 @@ const Summary = () => {
     },
     {
       name: "Conectividade",
-      icon: <Link />,
+      icon: <LinkIcon />,
     },
     {
       name: "Resiliência",
@@ -73,7 +84,7 @@ const Summary = () => {
             <div className="flex flex-row text-center h-1/5 items-center justify-center flex-wrap gap-1 mb-2">
               {paths.map((path: string) => {
                 return (
-                  <Button className="w-1/4 bg-black rounded-xl h-3/6 p-0 border-transparent">
+                  <Button key={path} className="w-1/4 bg-black rounded-xl h-3/6 p-0 border-transparent">
                     <SocialIcon
                       url={path}
                       key={path}
@@ -85,20 +96,21 @@ const Summary = () => {
                 );
               })}
             </div>
-            <div className="h-4/5 bg-black rounded-3xl m-1 p-2 border-transparent">
-              <h1 className="font-bold md:text-xl ps-1 pt-2">Item 3</h1>
-              <p className="font-light ps-1 pb-2 text-xs">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima,
-                beatae perferendis earum tempore cumque consequuntur
-                accusantium, ipsa accusamus reprehenderit laudantium tenetur
-                dolorum dolore facere veritatis in, animi velit eius at.
-              </p>
+            <div className="h-4/5 bg-black rounded-3xl m-1 p-2 border-transparent flex">
+              <div className="flex-grow flex flex-col items-center justify-center w-full">
+                <Link href="/" className="flex flex-col items-center hover:text-primary transition delay-75">
+                  <h1 className="font-bold md:text-xl mb-2">Lançamento em breve!</h1>
+                  <p className="font-light ps-1 pb-2 text-md">Fique de olho!</p>
+                </Link>
+              </div>
             </div>
           </div>
           <div className="w-2/4 bg-primary rounded-3xl m-1 p-2 border-transparent flex flex-col items-center">
             <div className="flex-grow flex flex-col items-center justify-center w-full">
               <h1 className="font-bold text-center text-5xl">0+</h1>
-              <p className="text-base text-center">Estabelecimentos cadastrados</p>
+              <p className="text-base text-center">
+                Estabelecimentos cadastrados
+              </p>
             </div>
           </div>
         </div>
@@ -113,10 +125,8 @@ const Summary = () => {
             <div className="flex flex-wrap justify-evenly gap-1">
               {mockValues.map((value: Value) => {
                 return (
-                  <Button className="bg-black w-28 h-24 text-wrap border border-muted flex flex-col">
-                    <div className="m-2">
-                      {value.icon}
-                    </div>
+                  <Button key={value.name} className="bg-black w-28 h-24 text-wrap border border-muted flex flex-col">
+                    <div className="m-2">{value.icon}</div>
                     <p>{value.name}</p>
                   </Button>
                 );

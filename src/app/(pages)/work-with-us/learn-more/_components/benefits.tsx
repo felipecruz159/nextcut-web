@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 import Summary from "./summary";
-
+import { BenefitsList } from "./benefits-list";
+import YouTubeEmbed from "@/app/_components/YoutubeEmbed";
 
 const Benefits = () => {
   const benefitsRef = useRef<HTMLDivElement>(null);
@@ -14,6 +15,7 @@ const Benefits = () => {
       benefitsRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
+  // TODO: Make it responsive to smaller screens
   return (
     <>
       <div className="hidden lg:block w-full relative">
@@ -42,10 +44,34 @@ const Benefits = () => {
           className="object-cover m-auto max-h-[80vh] brightness-50 z-0"
         />
       </div>
-      <section className="container mt-4">
-        <h1 className="font-bold md:text-2xl text-lg text-primary">Mas primeiro...</h1>
-        <h1 className="font-bold md:text-4xl text-lg mb-4">Conheça a gente</h1>
-        <Summary />
+      <section className="mt-4 flex flex-col gap-10">
+        <div className="container">
+          <h1 className="font-bold md:text-2xl text-lg text-primary">
+            Mas primeiro...
+          </h1>
+          <h1 className="font-bold md:text-4xl text-lg mb-4">
+            Conheça a gente
+          </h1>
+          <Summary />
+        </div>
+        <div className="bg-[#000]">
+          <div className="container flex justify-center p-5">
+            <YouTubeEmbed
+              src="https://www.youtube.com/embed/QFpqQZyjZJ8?si=bUxUAUDB-SDj-GzE"
+              title="Apresentação Nextcut"
+            />
+            <YouTubeEmbed
+              src="https://www.youtube.com/embed/UezMv9nkK8M?si=eL_5Xa5oALoXG8rw"
+              title="Apresentação Nextcut"
+            />
+          </div>
+        </div>
+        <div>
+          <div className="container flex flex-col items-center" ref={benefitsRef}>
+            <BenefitsList />
+          <Button className="m-5">Entrar para a Nextcut</Button>
+          </div>
+        </div>
       </section>
     </>
   );
