@@ -13,3 +13,14 @@ export interface Isession {
       image: string | null
    }
 }
+
+export interface RegisterProfessionalFormData {
+   name: string;
+   phone: string;
+   CEP: string;
+   neighborhood: string;
+   street: string;
+   state: string;
+   city: string;
+   number: string;
+}
