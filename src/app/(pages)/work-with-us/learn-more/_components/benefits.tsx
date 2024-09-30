@@ -19,7 +19,8 @@ const Benefits = () => {
   return (
     <>
       <div className="hidden lg:block w-full relative">
-        <div className="absolute w-full h-full max-h-max flex justify-center items-center z-10">
+        {/* Tirado max-h-max, estava desalinhado verticalmente */}
+        <div className="absolute w-full h-full flex justify-center items-center  z-10">
           <div className="md:w-8/12 flex-col justify-center items-center ">
             <h1 className=" font-bold md:text-7xl text-lg text-center mb-4">
               Como a <span className="text-primary">Nextcut</span> pode te
