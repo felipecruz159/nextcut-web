@@ -15,14 +15,13 @@ const Benefits = () => {
       benefitsRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
-  // TODO: Make it responsive to smaller screens
   return (
     <>
-      <div className="hidden lg:block w-full relative">
+      <div className="hidden sm:block w-full relative">
         {/* Tirado max-h-max, estava desalinhado verticalmente */}
         <div className="absolute w-full h-full flex justify-center items-center  z-10">
           <div className="md:w-8/12 flex-col justify-center items-center ">
-            <h1 className=" font-bold md:text-7xl text-lg text-center mb-4">
+            <h1 className=" font-bold md:text-5xl text-lg text-center mb-4">
               Como a <span className="text-primary">Nextcut</span> pode te
               ajudar?
             </h1>
@@ -56,7 +55,7 @@ const Benefits = () => {
           <Summary />
         </div>
         <div className="bg-[#000]">
-          <div className="container flex justify-center p-5">
+          <div className="container flex flex-wrap justify-center p-5">
             <YouTubeEmbed
               src="https://www.youtube.com/embed/QFpqQZyjZJ8?si=bUxUAUDB-SDj-GzE"
               title="Apresentação Nextcut"

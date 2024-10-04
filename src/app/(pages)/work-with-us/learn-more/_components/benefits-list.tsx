@@ -70,13 +70,13 @@ const benefits: Benefits[] = [
 ];
 export const BenefitsList = () => {
   return (
-    <div className="">
+    <div className="container">
       <h1 className="font-bold md:text-2xl text-lg mb-6">Benefícios</h1>
-      <div className="flex flex-wrap gap-3 justify-center">
+      <div className="flex flex-wrap gap-3 justify-center ">
         {benefits.map((benefit) => (
           <div
             key={benefit.title}
-            className="bg-black text-wrap border border-muted flex flex-col items-center text-center w-1/4 p-3 rounded-xl"
+            className="bg-black text-wrap border border-muted flex flex-col items-center text-center w-screen lg:w-1/4 p-3 rounded-xl"
           >
             <div className="m-2">{benefit.icon}</div>
             <h1 className="font-bold text-lg">{benefit.title}</h1>

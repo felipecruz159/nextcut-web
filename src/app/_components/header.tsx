@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import SideMenu from "./side-menu";
+import Image from "next/image";
 
 export default async function Header() {
   const session = await getServerSession();
@@ -12,7 +13,15 @@ export default async function Header() {
   return (
     <Card className="rounded-none border-b-2">
       <CardContent className="flex justify-between pb-0 py-6">
-        <div>Logo</div>
+        <div>
+        <Image
+            src="/logo.png"
+            alt="Logo Nextcut"
+            width={256}
+            height={256}
+            className="w-2/5 max-w-36"
+          />
+        </div>
         {session ? (
           <div>
             <Sheet>

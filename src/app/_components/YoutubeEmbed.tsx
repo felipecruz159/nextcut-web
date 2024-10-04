@@ -9,8 +9,6 @@ type YouTubeEmbedProps = {
 const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ src, title }) => (
   <div className={"container-fluid"}>
     <iframe
-      width="560"
-      height="315"
       className="p-1"
       src={src}
       title={title}
