@@ -14,7 +14,7 @@ export interface Isession {
    }
 }
 
-export interface RegisterProfessionalFormData {
+export interface IregisterProfessionalFormData {
    name: string;
    phone: string;
    CEP: string;
@@ -23,4 +23,8 @@ export interface RegisterProfessionalFormData {
    state: string;
    city: string;
    number: string;
+   email: string
+}
+export interface IemailCheckProfessional {
+   email: string
 }
