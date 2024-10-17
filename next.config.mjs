@@ -4,6 +4,10 @@ const nextConfig = {
    images: {
       remotePatterns: [{
          hostname: 'utfs.io',
+         protocol: 'http',
+         hostname: 'localhost',
+         port: '3333',
+         pathname: '/public/barberShop/**',
       }]
    }
 };

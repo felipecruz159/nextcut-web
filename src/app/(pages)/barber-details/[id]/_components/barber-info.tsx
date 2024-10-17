@@ -1,29 +1,24 @@
-'use client'
+'use client';
 import { Button } from "@/app/_components/ui/button";
 import { axiosInstance } from "@/app/_helpers/axios-instance";
+import { imagebarberShop } from "@/app/_helpers/axios-instance";
+import { calculateStarRating } from "@/app/_lib/utils";
+import { Ibarber } from "@/app/types/generic";
 import { ChevronLeft, MapPin, Menu, Star } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const BarberInfo = ({ params }: { params: string }) => {
-
-   interface Barber {
-      id: string;
-      name: string;
-      address: string;
-      imageUrl: string;
-   }
-
+const BarberInfo = ({ params }: { params: { id: string } }) => {
    const router = useRouter();
-   const [barber, setBarber] = useState<Barber | undefined>();
+   const [barber, setBarber] = useState<Ibarber | undefined>();
    const [isLoading, setLoading] = useState(false);
    const [error, setError] = useState<string | undefined>();
 
    useEffect(() => {
-      if (params) {
+      if (params?.id) {
          setLoading(true);
-         axiosInstance.get(`/barberDetails/${params}`)
+         axiosInstance.get(`/barberDetails/${params.id}`)
             .then((res) => {
                setBarber(res.data);
                setLoading(false);
@@ -34,52 +29,56 @@ const BarberInfo = ({ params }: { params: string }) => {
                setLoading(false);
             });
       }
-   }, [params]); // Dependency on params.id ensures useEffect runs when id changes
+   }, [params.id]);
 
    if (isLoading) {
-      // TODO: create page for loading
       return <p>Loading...</p>;
    }
 
    if (error) {
-      // TODO: create page for error
       return <p>{error}</p>;
    }
 
    const handleBackClick = () => {
       router.replace('/');
-   }
+   };
 
    return (
       <div>
          {barber && (
             <div>
-               <div className="w-full h-[250px] relative">
-                  <div className="absolute z-10 top-3 left-4 ">
-                     <Button onClick={handleBackClick} variant={'secondary'} className="px-3 py-5" ><ChevronLeft strokeWidth={2} size={24} /></Button>
+               <div className="w-full mt-5 h-[250px] relative">
+                  <div className="absolute z-10 top-3 left-4">
+                     <Button onClick={handleBackClick} variant={'secondary'} className="px-3 py-5">
+                        <ChevronLeft strokeWidth={2} size={24} />
+                     </Button>
                   </div>
-                  <div className="absolute z-10 top-3 right-4 ">
-                     <Button variant={'secondary'} className="px-3 py-5" ><Menu strokeWidth={2} size={24} /></Button>
-                  </div>
-
-                  <Image src={barber.imageUrl} fill alt={barber.name} className='object-cover opacity-85' />
+                  {barber.imageUrl ? (
+                     <Image src={`${imagebarberShop.defaults.baseURL}${barber.imageUrl}`} fill alt={barber.name} className='object-cover placeholder-opacity-75 rounded-t-lg' />
+                  ) : (
+                     <div className="h-[250px] w-full bg-stone-900 flex items-center justify-center">
+                        <p>Sem imagem disponível</p>
+                     </div>
+                  )}
                </div>
                <div className="px-6 py-4">
                   <h2 className="text-xl mb-2">{barber.name}</h2>
                   <div className="flex flex-row gap-2 items-center">
                      <MapPin size={18} className="text-primary" />
-                     {barber.address}
+                     {barber.address?.neighborhood ?? 'Sem endereço disponível'}
                   </div>
                   <div className="flex flex-row gap-2 items-center">
                      <Star size={18} className="text-primary" />
-                     5,0 (351 avaliações)
+                     {barber.Rating.rating && barber.Rating.appraiser
+                        ? `${calculateStarRating(barber.Rating.rating, barber.Rating.appraiser)} (${barber.Rating.appraiser} avaliações)`
+                        : 'Sem avaliações'}
                   </div>
                </div>
-               <div className="border-b " />
+               <div className="border-b" />
             </div>
          )}
       </div>
    );
-}
+};
 
 export default BarberInfo;

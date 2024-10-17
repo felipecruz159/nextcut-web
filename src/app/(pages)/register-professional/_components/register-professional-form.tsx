@@ -18,21 +18,22 @@ import {
    DialogHeader,
    DialogTitle,
    DialogDescription,
-} from "@/app/_components/ui/dialog"; // Importando os componentes do Dialog
+} from "@/app/_components/ui/dialog";
 
 const RegisterProfessionalForm = () => {
    const { data: session } = useSession();
    const [loading, setLoading] = useState(false);
    const [error, setError] = useState<string | null>(null);
    const [isEmailAvailable, setIsEmailAvailable] = useState(false);
-   const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar o modal
+   const [isModalOpen, setIsModalOpen] = useState(false);
+   const [imageFile, setImageFile] = useState<File | null>(null);
    const router = useRouter();
 
    const { register, control, handleSubmit, setValue, watch, reset } = useForm<IregisterProfessionalFormData>({
       defaultValues: {
          name: "",
          phone: "",
-         CEP: "", // Manter maiúsculo se assim está na interface
+         CEP: "",
          neighborhood: "",
          street: "",
          state: "",
@@ -42,13 +43,11 @@ const RegisterProfessionalForm = () => {
       },
    });
 
-
    const handleSubmitData: SubmitHandler<IregisterProfessionalFormData> = async (data) => {
       const { name, phone, email, CEP, street, number, neighborhood, city, state } = data;
 
-      console.log("Dados enviados:", data);
       if (!name || !phone || !CEP || !number || !email || !street || !neighborhood || !city || !state) {
-         setError('Todos os campos são obrigatórios');
+         setError('Todos os campos são obrigatórios, exceto a imagem.');
          return;
       }
 
@@ -56,7 +55,21 @@ const RegisterProfessionalForm = () => {
 
       try {
          setLoading(true);
-         await registerProfessionalApi(data);
+         const formData = new FormData();
+         if (imageFile) {
+            formData.append('barberShopBackground', imageFile);
+         }
+         formData.append('name', name);
+         formData.append('phone', phone);
+         formData.append('email', email);
+         formData.append('CEP', CEP);
+         formData.append('neighborhood', neighborhood);
+         formData.append('street', street);
+         formData.append('state', state);
+         formData.append('city', city);
+         formData.append('number', number);
+
+         await registerProfessionalApi(formData);
          toast.success('Profissional cadastrado com sucesso!');
          reset();
          router.push('/login');
@@ -139,6 +152,27 @@ const RegisterProfessionalForm = () => {
                   placeholder="Email Verificado"
                   {...register("email", { required: true })}
                   onBlur={(e) => checkEmail(e.target.value)}
+                  required
+               />
+            </div>
+
+            <div className="my-2 mb-3">
+               <Label htmlFor="image">Imagem da Barbearia</Label>
+               <Input
+                  type="file"
+                  id="image"
+                  accept="image/*"
+                  onChange={(e) => {
+                     if (e.target.files && e.target.files[0]) {
+                        const selectedFile = e.target.files[0];
+                        if (['image/jpeg', 'image/jpg', 'image/png'].includes(selectedFile.type)) {
+                           setImageFile(selectedFile);
+                        } else {
+                           setError('Apenas imagens JPEG ou PNG são aceitas.');
+                        }
+                     }
+                  }}
+                  disabled={!isEmailAvailable}
                   required
                />
             </div>
@@ -252,20 +286,17 @@ const RegisterProfessionalForm = () => {
                />
             </div>
 
-            <div className="my-2">
-               <Button className="w-full" type="submit" disabled={loading || !isEmailAvailable}>
-                  {loading ? 'Cadastrando...' : 'Cadastrar'}
-               </Button>
-            </div>
+            <Button type="submit" disabled={loading || !isEmailAvailable} className="w-full">
+               {loading ? 'Cadastrando...' : 'Cadastrar'}
+            </Button>
          </form>
 
-         {/* Modal de Erro */}
          <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
             <DialogContent>
                <DialogHeader>
                   <DialogTitle>Erro</DialogTitle>
                   <DialogDescription>
-                     {error}
+                     Ocorreu um erro ao verificar o email. Por favor, tente novamente.
                   </DialogDescription>
                </DialogHeader>
                <Button onClick={() => setIsModalOpen(false)}>Fechar</Button>

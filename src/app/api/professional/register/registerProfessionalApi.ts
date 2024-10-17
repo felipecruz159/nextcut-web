@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/app/_helpers/axios-instance";
-import { IemailCheckProfessional, IregisterProfessionalFormData } from "@/app/types/client/typesClient";
+import { IemailCheckProfessional } from "@/app/types/client/typesClient";
 
 export const emailCheckProfessionalApi = async (data: IemailCheckProfessional): Promise<boolean> => {
    try {
@@ -12,13 +12,23 @@ export const emailCheckProfessionalApi = async (data: IemailCheckProfessional): 
       throw error;
    }
 };
-
-export const registerProfessionalApi = async (data: IregisterProfessionalFormData): Promise<void> => {
+export const registerProfessionalApi = async (data: FormData): Promise<void> => {
    try {
-      console.log(data)
-      await axiosInstance.post(`/register-professional`, data);
+      const formDataObject: { [key: string]: any } = {};
+      data.forEach((value, key) => {
+         formDataObject[key] = value;
+      });
+      console.log('Dados do FormData:', formDataObject);
+
+      await axiosInstance.post(`/register-professional`, data, {
+         headers: {
+            'Content-Type': 'multipart/form-data',
+         },
+      });
    } catch (error) {
       console.error("Erro ao criar usuário!", error);
       throw error;
    }
 };
+
+

@@ -23,7 +23,8 @@ export interface IregisterProfessionalFormData {
    state: string;
    city: string;
    number: string;
-   email: string
+   email: string,
+   imageFile: string
 }
 export interface IemailCheckProfessional {
    email: string

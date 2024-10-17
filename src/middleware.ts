@@ -4,13 +4,11 @@ export function middleware(request: NextRequest) {
    const cookieHeader = request.headers.get('cookie');
    const cookies = parseCookies(cookieHeader);
    const token = cookies['next-auth.session-token'];
-   console.log('Token:', token);
 
    const protectedRoutes = ['/login', '/register'];
    const isProtectedRoute = protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route));
 
    if (token && isProtectedRoute) {
-      console.log('Usuário autenticado tentando acessar rota protegida. Redirecionando para /');
       return NextResponse.redirect(new URL('/', request.url));
    }
 
