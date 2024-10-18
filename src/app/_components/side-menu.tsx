@@ -1,81 +1,89 @@
-'use client'
-import { signOut, useSession } from "next-auth/react"
-import Link from "next/link";
-
-import { CalendarClock, Heart, Home, LogOutIcon, User2 } from "lucide-react";
-
-import { Button } from "./ui/button";
+"use client";
+import { useState } from "react";
+import { useSession } from "next-auth/react";
 import { SheetHeader, SheetTitle } from "./ui/sheet";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, } from "./ui/dropdown-menu"
+import MainMenu from "./main-menu";
+import SettingsMenu from "./settings-menu";
+import HelpMenu from "./help-menu";
+import { Button } from "./ui/button";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 const SideMenu = () => {
-   const { data: session, status } = useSession();
+  const { data: session } = useSession();
+  const [activeMenu, setActiveMenu] = useState("MAIN");
 
-   const getInitials = (fullName: string) => {
-      const parts = fullName.split(' ');
+  const getInitials = (fullName: string) => {
+    const parts = fullName.split(" ");
+    return parts.length === 1
+      ? parts[0].slice(0, 2)
+      : parts[0][0] + parts[parts.length - 1][0];
+  };
 
-      if (parts.length === 1) {
-         return parts[0].slice(0, 2);
-      }
+  const renderActiveMenu = () => {
+    switch (activeMenu) {
+      case "SETTINGS":
+        return <SettingsMenu onNavigate={setActiveMenu} />;
+      case "HELP":
+        return <HelpMenu onNavigate={setActiveMenu} />;
+      default:
+        return <MainMenu onNavigate={setActiveMenu} />;
+    }
+  };
 
-      const name = parts[0];
-      const lastName = parts[parts.length - 1];
-      const initials = name[0] + lastName[0];
+  const handleBack = () => {
+    setActiveMenu("MAIN");
+  };
 
-      return initials;
-   }
+  return (
+    <div>
+      <SheetHeader className="border-b mb-4 p-4">
+        <SheetTitle className="flex flex-row items-center">
+          {activeMenu !== "MAIN" && (
+            <Button
+              asChild
+              variant="outline"
+              className="border-none hover:bg-transparent p-0 m-0 mr-2"
+              onClick={handleBack}
+            >
+              <Link href="#">
+                <ArrowLeft size={20} />
+              </Link>
+            </Button>
+          )}
+          {activeMenu === "SETTINGS"
+            ? "Configurações"
+            : activeMenu === "HELP"
+            ? "Ajuda"
+            : "Menu"}
+        </SheetTitle>
+      </SheetHeader>
 
-   return (
-      <div>
-         <SheetHeader className="border-b mb-4 p-4">
-            <SheetTitle>Menu</SheetTitle>
-         </SheetHeader>
-         {session?.user && (
-            <div className="flex items-center mb-4">
-               <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                     <Button className="w-full bg-transparent hover:bg-transparent justify-start p-0 text-start">
-                        <div className="flex items-center gap-2 ">
-                           <Avatar className="w-8 h-8">
-                              <AvatarImage src={`${session.user.image}`} alt="Image User" />
-                              <AvatarFallback>{session.user.name ? getInitials(session.user.name) : "AV"}</AvatarFallback>
-                           </Avatar>
-                           <div>
-                              <p className="text-md">{session.user.name}</p>
-                              <p className="text-sm text-muted-foreground">{session.user.email}</p>
-                           </div>
-                        </div>
-                     </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56">
-                     <DropdownMenuLabel>Informações da conta</DropdownMenuLabel>
-                     <DropdownMenuSeparator />
-                     <Button className="w-full bg-transparent hover:bg-transparent gap-3 justify-start px-2" size={"icon"} onClick={() => signOut({ callbackUrl: '/' })}>
-                        <LogOutIcon /> Sair da conta
-                     </Button>
-                  </DropdownMenuContent>
-               </DropdownMenu>
+      {session?.user && (
+        <div className="flex items-center mb-4">
+          <div className="flex items-center gap-2">
+            <Avatar className="w-8 h-8">
+              <AvatarImage src={session.user.image || ""} alt="User Image" />
+              <AvatarFallback>
+                {getInitials(session.user.name || "AV")}
+              </AvatarFallback>
+            </Avatar>
+            <div>
+              <p className="text-md">{session.user.name}</p>
+              <p className="text-sm text-muted-foreground">
+                {session.user.email}
+              </p>
             </div>
-         )}
-         <div>
-            <div className='flex flex-col gap-2  items-center'>
-               <Button asChild variant={'outline'} className="w-full gap-2 justify-start border-none">
-                  <Link href='/'><Home size={20} /> Início</Link>
-               </Button>
-               <Button asChild variant={'outline'} className="w-full gap-2 justify-start border-none">
-                  <Link href='/'><User2 size={20} /> Perfil</Link>
-               </Button>
-               <Button asChild variant={'outline'} className="w-full gap-2 justify-start border-none">
-                  <Link href='/'><CalendarClock size={20} /> Agenda</Link>
-               </Button>
-               <Button asChild variant={'outline'} className="w-full gap-2 justify-start border-none">
-                  <Link href='/'><Heart size={20} /> Favoritos</Link>
-               </Button>
-            </div>
-         </div>
+          </div>
+        </div>
+      )}
+
+      <div className="flex flex-col gap-2 items-center">
+        {renderActiveMenu()}
       </div>
-   );
-}
+    </div>
+  );
+};
 
 export default SideMenu;

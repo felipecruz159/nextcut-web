@@ -50,6 +50,9 @@
   }
 }
 
+::selection {
+  background-color: hsl(var(--primary));
+}
 
 @layer base {
   * {

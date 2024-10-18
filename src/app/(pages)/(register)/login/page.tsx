@@ -5,9 +5,6 @@ import Link from "next/link";
 import LoginForm from "./_components/login-form";
 import { Separator } from "@/app/_components/ui/separator";
 import BackButton from "@/app/_components/ui/backButton";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
 import ButtonGoogle from "@/app/_components/buttonGoogle";
 
 export default function Login() {
