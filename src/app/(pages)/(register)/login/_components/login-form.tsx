@@ -75,7 +75,7 @@ export default function LoginForm() {
         </div>
         <div>
           <Button variant="link" className="text-xs font-light p-0">
-            <Link href="/recover-password">Esqueceu a senha?</Link>
+            <Link href="/reset-password-email">Esqueceu a senha?</Link>
           </Button>
         </div>
       </div>
