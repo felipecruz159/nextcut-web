@@ -4,7 +4,7 @@ import { Menu } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
-import SideMenu from "./side-menu";
+import SideMenu from "./(menu)/side-menu";
 import Image from "next/image";
 
 export default async function Header() {

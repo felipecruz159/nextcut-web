@@ -67,9 +67,14 @@ const Benefits = () => {
           </div>
         </div>
         <div>
-          <div className="container flex flex-col items-center" ref={benefitsRef}>
+          <div
+            className="container flex flex-col items-center"
+            ref={benefitsRef}
+          >
             <BenefitsList />
-          <Button className="m-5">Entrar para a Nextcut</Button>
+            <Button className="m-5">
+              <Link href="/register-professional">Entrar para a Nextcut</Link>
+            </Button>
           </div>
         </div>
       </section>

@@ -5,12 +5,13 @@ import {
   CalendarClock,
   Heart,
   Store,
-  Building
+  Building,
+  User2
 } from "lucide-react";
 import Link from "next/link";
-import { Button } from "./ui/button";
-import { Separator } from "./ui/separator";
-import { SideMenuProps } from "../types/client/sideMenu";
+import { Button } from "../ui/button";
+import { Separator } from "../ui/separator";
+import { SideMenuProps } from "../../types/client/sideMenu";
 import { useUser } from "@/app/context//user";
 
 const MainMenu: React.FC<SideMenuProps> = ({ onNavigate }) => {
@@ -31,6 +32,16 @@ const MainMenu: React.FC<SideMenuProps> = ({ onNavigate }) => {
           <Home size={20} /> Início
         </Link>
       </Button>
+
+      <Button
+      asChild
+      variant="outline"
+      className="w-full gap-2 justify-start border-none"
+    >
+      <Link href="/profile">
+        <User2 size={20} /> Perfil
+      </Link>
+    </Button>
 
       {user?.type === "professional" && (
         <Button

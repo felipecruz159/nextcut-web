@@ -1,7 +1,7 @@
 import { Home, HelpCircle } from "lucide-react";
 import Link from "next/link";
-import { Button } from "./ui/button";
-import { SideMenuProps } from "../types/client/sideMenu";
+import { Button } from "../ui/button";
+import { SideMenuProps } from "../../types/client/sideMenu";
 
 const HelpMenu: React.FC<SideMenuProps> = ({ onNavigate }) => (
   <>
