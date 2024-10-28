@@ -35,3 +35,12 @@ export interface Rating {
    appraiser: number;
    rating: number;
 }
+
+export interface ServiceFormData {
+   barbershopId: string | undefined;
+   name: string;
+   description: string;
+   category: string;
+   price: number;
+   time: number;
+}

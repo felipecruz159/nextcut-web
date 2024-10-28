@@ -29,3 +29,41 @@ export interface IregisterProfessionalFormData {
 export interface IemailCheckProfessional {
    email: string
 }
+
+export interface UserType {
+   id: string;
+   email: string;
+   name: string;
+   type: string;
+   phone: string | null;
+   barbershops: BarbershopType;
+   address: AddressType;
+   ratings: RatingType;
+};
+
+interface BarbershopType {
+   id: string;
+   name: string;
+   imageUrl: string;
+   phone: string;
+}
+
+interface AddressType {
+   id: string;
+   userId: string;
+   neighborhood: string;
+   number: number;
+   street: string;
+   state: string;
+   city: string;
+   zipCode: string;
+};
+
+interface RatingType {
+   id: string;
+   userId: string;
+   barbershopId: string | null;
+   comment: string;
+   appraiser: number;
+   rating: number;
+};

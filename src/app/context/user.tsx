@@ -3,14 +3,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import { axiosInstance } from '../_helpers/axios-instance';
-
-type UserType = {
-   id: string;
-   email: string;
-   name: string;
-   type: string;
-   phone: string;
-};
+import { UserType } from '../types/client/typesClient';
 
 type UserContextType = {
    user: UserType | null;
@@ -41,13 +34,17 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
                   params: { email: session.user.email },
                });
                if (response.data) {
-                  setUser({
+                  const userData: UserType = {
                      id: response.data.user.id,
                      email: response.data.user.email,
                      name: response.data.user.name,
                      type: response.data.user.type,
                      phone: response.data.user.phone,
-                  })
+                     barbershops: response.data.user.barbershop || null,
+                     address: response.data.user.address || null,
+                     ratings: response.data.user.ratings || null,
+                  };
+                  setUser(userData);
                }
             } catch (error) {
                console.error('Erro ao buscar o tipo do usuário:', error);
