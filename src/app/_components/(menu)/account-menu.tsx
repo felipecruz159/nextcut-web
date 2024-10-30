@@ -6,8 +6,8 @@ import { SideMenuProps } from "../../types/client/sideMenu";
 const AccountMenu: React.FC<SideMenuProps> = ({ onNavigate }) => (
   <>
     <Button asChild variant="outline" className="w-full gap-2 justify-start border-none">
-      <Link href="/settings/account/account-access">
-        <KeyRound size={20} /> Informações de acesso
+      <Link href="/settings/account/account-info">
+        <KeyRound size={20} /> Informações da conta
       </Link>
     </Button>
     <Button asChild variant="outline" className="w-full gap-2 justify-start border-none text-primary">

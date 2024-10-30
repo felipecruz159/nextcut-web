@@ -5,14 +5,19 @@ import { Input } from "@ui/input";
 import { Label } from "@ui/label";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import InputMask from "react-input-mask";
+import { axiosInstance } from "@/app/_helpers/axios-instance";
+import { useRouter } from "next/navigation";
 
-export const AccountAccessForm = () => {
+
+export const AccountInfoForm = () => {
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [phone, setPhone] = useState<string | null>("");
   const [error, setError] = useState<string>("");
   const { user } = useUser();
-
+  const router = useRouter();
+  
   useEffect(() => {
     if (!user) return;
     // console.log(user);
@@ -25,10 +30,25 @@ export const AccountAccessForm = () => {
     event.preventDefault();
 
     if (!name) {
-      setError("Nome deve estar preenchido!");
+      setError("Por favor, preencha o nome.");
+      return;
     }
 
-    toast.success("Dados alterados com sucesso!");
+    if (!phone || phone.includes("_")) {
+      setError("Por favor, preencha o telefone completo.");
+      return;
+    }
+
+    setError("");
+    try {
+      await axiosInstance.post(`/update-account-info`, { email, name, phone });
+
+      toast.success("Dados alterados com sucesso!");
+      // router.push('/');
+
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -62,23 +82,25 @@ export const AccountAccessForm = () => {
 
       <div className="my-2">
         <Label htmlFor="name">Telefone</Label>
-        <Input
+        <InputMask
+          className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
           type="tel"
+          mask="(99) 99999-9999"
           id="phone"
           name="phone"
           placeholder="Telefone"
-          value={phone || ''}
+          value={phone || ""}
           onChange={(e) => setPhone(e.target.value)}
         />
       </div>
 
       <div className="my-2">
         <Button className="w-full" type="submit">
-          Entrar
+          Atualizar dados
         </Button>
       </div>
     </form>
   );
 };
 
-export default AccountAccessForm;
+export default AccountInfoForm;

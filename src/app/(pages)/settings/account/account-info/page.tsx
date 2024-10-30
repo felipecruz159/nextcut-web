@@ -1,16 +1,16 @@
 import { AlternativeHeader } from "@/app/_components/alternativeHeader";
-import AccountAccessForm from "./_components/accountAccessForm";
+import AccountInfoForm from "./_components/accountInfoForm";
 
-export const AccountAccess = async () => {
+export const AccountInfo = async () => {
 
     return (
       <div className="container">
         <AlternativeHeader variant={'logo'} />
-        <AccountAccessForm />
+        <AccountInfoForm />
       </div>
     );
   };
   
-  export default AccountAccess;
+  export default AccountInfo;
   
   
