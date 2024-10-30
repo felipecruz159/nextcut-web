@@ -2,28 +2,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import SignupForm from "./_components/signup-form";
-import BackButton from "@/app/_components/ui/backButton";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import AlternativeHeader from "@/app/_components/alternativeHeader";
 
 export default function SignUp() {
 
   return (
     <div className="container h-screen grid grid-cols-3 gap-4">
       <div className="col-span-3 md:col-span-1 place-content-center" >
-        <div className="absolute top-6 left-6">
-          <BackButton />
-        </div>
-        <div className="flex justify-center mt-4">
-          <Image
-            src="/logo.png"
-            alt="Logo Nextcut"
-            width={256}
-            height={256}
-            className="w-2/5 max-w-36"
-          />
-        </div>
+        <AlternativeHeader variant={'logo'} />
 
         <SignupForm />
 
