@@ -15,6 +15,7 @@ export interface Ibarber {
    addressId: string;
    userId: string;
    address: Address;
+   appraiser: number;
    Rating: Rating;
 }
 
@@ -32,7 +33,6 @@ export interface Rating {
    userId: number;
    barbershopId: string;
    comment: string;
-   appraiser: number;
    rating: number;
 }
 

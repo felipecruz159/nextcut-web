@@ -64,6 +64,5 @@ interface RatingType {
    userId: string;
    barbershopId: string | null;
    comment: string;
-   appraiser: number;
    rating: number;
 };

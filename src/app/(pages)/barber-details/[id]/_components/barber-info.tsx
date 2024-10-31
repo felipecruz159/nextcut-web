@@ -69,9 +69,9 @@ const BarberInfo = ({ params }: { params: { id: string } }) => {
                   </div>
                   <div className="flex flex-row gap-2 items-center">
                      <Star size={18} className="text-primary" />
-                     {barber.Rating.rating && barber.Rating.appraiser
+                     {/* {barber.Rating.rating && barber.Rating.appraiser
                         ? `${calculateStarRating(barber.Rating.rating, barber.Rating.appraiser)} (${barber.Rating.appraiser} avaliações)`
-                        : 'Sem avaliações'}
+                        : 'Sem avaliações'} */}
                   </div>
                </div>
                <div className="border-b" />

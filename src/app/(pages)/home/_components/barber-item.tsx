@@ -62,9 +62,9 @@ const BarberItem = ({ barber }: BarberItemProps) => {
                <div className="absolute z-50">
                   <Badge className="flex justify-center items-center gap-1 p-1 mt-1 ml-2 bg-[#000000ce] hover:bg-[#000000ce] rounded-3xl text-xs">
                      <Star className="fill-primary text-primary" size={14} />
-                     {barber.Rating.rating && barber.Rating.appraiser
+                     {/* {barber.Rating.rating && barber.Rating.appraiser
                         ? `${calculateStarRating(barber.Rating.rating, barber.Rating.appraiser)} `
-                        : '0.0'}
+                        : '0.0'} */}
                   </Badge>
                </div>
                <Image
