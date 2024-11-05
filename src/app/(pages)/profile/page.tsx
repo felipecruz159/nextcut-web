@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import AlternativeHeader from "@/app/_components/alternativeHeader";
 import { Separator } from "@/app/_components/ui/separator";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
@@ -8,6 +8,8 @@ import ProfileBadge from "./_components/badge";
 import { Pencil } from "lucide-react";
 import { History } from "@/app/_components/history";
 import { useSession } from "next-auth/react";
+import { countBookings } from "@/app/api/client/bookings/countBookings";
+import { useEffect, useState } from "react";
 
 const getInitials = (fullName: string) => {
   const parts = fullName.split(" ");
@@ -17,8 +19,26 @@ const getInitials = (fullName: string) => {
 };
 
 export const Profile = () => {
-  const {data: session} = useSession();
-  console.log('useSessions', session)
+  const { data: session } = useSession();
+  const [bookingsRealized, setBookingsRealized] = useState(null);
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const result = await countBookings({
+          email: session?.user?.email || "",
+        });
+        setBookingsRealized(result.totalBookings);
+      } catch (err) {
+        console.error("Error fetching bookings:", err);
+      }
+    };
+
+    if (session?.user?.email) {
+      fetchBookings();
+    }
+  }, [session]);
+
   return (
     <>
       <div>
@@ -71,7 +91,7 @@ export const Profile = () => {
           <div className="flex gap-1">
             <Link href="#">
               {/* <p className="hover:text-primary hover:underline cursor-pointer font-light"> */}
-              <p className="cursor-auto">47 agendamentos</p>
+              <p className="cursor-auto">{bookingsRealized} agendamentos</p>
             </Link>
             {/* //? What else to put in here? */}
             {/* <p>•</p>
@@ -82,7 +102,7 @@ export const Profile = () => {
       <Separator className="mt-5" />
       <section className="mt-5 px-8">
         <h1 className="font-bold md:text-4xl text-lg mb-4">Histórico</h1>
-        <History />
+        <History email={session?.user?.email || ""} />
       </section>
     </>
   );
