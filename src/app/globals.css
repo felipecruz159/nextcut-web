@@ -52,6 +52,7 @@
 
 ::selection {
   background-color: hsl(var(--primary));
+  color: white;
 }
 
 @layer base {

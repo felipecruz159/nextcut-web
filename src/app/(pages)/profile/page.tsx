@@ -1,11 +1,13 @@
+"use client"
 import AlternativeHeader from "@/app/_components/alternativeHeader";
 import { Separator } from "@/app/_components/ui/separator";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
-import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 import ProfileBadge from "./_components/badge";
 import { Pencil } from "lucide-react";
+import { History } from "@/app/_components/history";
+import { useSession } from "next-auth/react";
 
 const getInitials = (fullName: string) => {
   const parts = fullName.split(" ");
@@ -14,9 +16,9 @@ const getInitials = (fullName: string) => {
     : parts[0][0] + parts[parts.length - 1][0];
 };
 
-export const Profile = async () => {
-  const session = await getServerSession();
-
+export const Profile = () => {
+  const {data: session} = useSession();
+  console.log('useSessions', session)
   return (
     <>
       <div>
@@ -38,6 +40,7 @@ export const Profile = async () => {
               className="object-cover rounded-full"
             />
           ) : (
+            // TODO: Fix this
             <AvatarFallback className="rounded-full">
               {getInitials(session?.user?.name || "AV")}
             </AvatarFallback>
@@ -61,15 +64,14 @@ export const Profile = async () => {
             <ProfileBadge />
           </div>
         </div>
-        <div className="flex justify-between text-muted-foreground text-sm font-bold">
+        <div className="flex justify-between text-muted-foreground text-sm font-bold mt-1">
           {/* // TODO: Name is not refreshing according to database, maybe create a function that returns the name from the database */}
           <p className="">{session?.user?.email}</p>
           {/* // TODO: Make it a count() function */}
           <div className="flex gap-1">
             <Link href="#">
-              <p className="hover:text-primary hover:underline cursor-pointer font-light">
-                47 agendamentos
-              </p>
+              {/* <p className="hover:text-primary hover:underline cursor-pointer font-light"> */}
+              <p className="cursor-auto">47 agendamentos</p>
             </Link>
             {/* //? What else to put in here? */}
             {/* <p>•</p>
@@ -78,6 +80,10 @@ export const Profile = async () => {
         </div>
       </section>
       <Separator className="mt-5" />
+      <section className="mt-5 px-8">
+        <h1 className="font-bold md:text-4xl text-lg mb-4">Histórico</h1>
+        <History />
+      </section>
     </>
   );
 };
