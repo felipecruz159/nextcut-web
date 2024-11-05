@@ -22,3 +22,24 @@ export const checkIfFavorited = async (userId: string, barberId: string) => {
       throw error;
    }
 };
+
+
+export const getFavorites = async (userId: string) => {
+   try {
+      const response = await axiosInstance.get(`/favorites/${userId}`);
+      return response.data;
+   } catch (error) {
+      console.error("Erro ao obter favoritos do usuário", error);
+      throw error;
+   }
+};
+
+export const getBarberShop = async (id: string) => {
+   try {
+      const response = await axiosInstance.get(`/barbershop/${id}`);
+      return response.data;
+   } catch (error) {
+      console.error("Erro ao obter favoritos do usuário", error);
+      throw error;
+   }
+};

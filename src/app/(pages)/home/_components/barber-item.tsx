@@ -100,7 +100,7 @@ const BarberItem = ({ barber }: BarberItemProps) => {
                         {isFavorited ? (
                            <FaHeart color="red" size={24} />
                         ) : (
-                           <FaRegHeart color="red" size={24} />
+                           <FaRegHeart className="text-muted-foreground" size={24} />
                         )}
                      </motion.div>
                   </Button>
