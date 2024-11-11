@@ -46,6 +46,8 @@ interface BarbershopType {
    name: string;
    imageUrl: string;
    phone: string;
+   about: string | null;
+   operation: string | null;
 }
 
 interface AddressType {

@@ -1,0 +1,96 @@
+/* Calendar.css */
+
+.react-calendar {
+   border: 2px solid #888;
+   /* Borda cinza */
+   border-radius: 10px;
+   /* Bordas arredondadas */
+   background-color: #222;
+   /* Fundo preto */
+   color: #fff;
+   /* Texto branco */
+}
+
+.react-calendar__tile {
+   background-color: #333;
+   /* Fundo dos dias */
+   color: #fff;
+   /* Cor dos números */
+   border-radius: 8px;
+   /* Bordas arredondadas nos dias */
+}
+
+.react-calendar__tile:enabled:hover {
+   background-color: #ff6600;
+   /* Cor laranja ao passar o mouse */
+}
+
+.react-calendar__tile:enabled:active {
+   background-color: #cc5200;
+   /* Cor laranja mais escura ao clicar */
+}
+
+.react-calendar__tile:disabled {
+   background-color: #555;
+   /* Cor dos dias desabilitados */
+   color: #aaa;
+   /* Texto dos dias desabilitados */
+   cursor: not-allowed;
+   /* Cursor de "não permitido" */
+}
+
+.react-calendar__tile--today {
+   background-color: #ff6600;
+   /* Cor laranja para o dia atual */
+   color: #fff;
+   /* Texto branco no dia atual */
+   font-weight: bold;
+   /* Deixar o texto mais forte no dia atual */
+}
+
+/* Estilo para os dias desabilitados (antes de ontem) */
+.react-calendar__tile--disabled {
+   background-color: #444;
+   /* Cor de fundo mais escura */
+   color: #888;
+   /* Cor do texto mais desbotada */
+}
+
+/* Estilo para o dia selecionado */
+.react-calendar__tile--active {
+   background-color: #ff6600;
+   /* Cor laranja para o dia selecionado */
+   color: white;
+   /* Texto branco */
+   font-weight: bold;
+   /* Deixar o texto mais forte no dia selecionado */
+}
+
+.react-calendar__navigation button {
+   background-color: #444;
+   /* Fundo dos botões de navegação */
+   color: #fff;
+   /* Cor dos ícones */
+   border-radius: 5px;
+   /* Bordas arredondadas nos botões */
+}
+
+.react-calendar__navigation button:hover {
+   background-color: #ff6600;
+   /* Laranja ao passar o mouse nos botões */
+}
+
+.react-calendar__navigation button:disabled {
+   background-color: #555;
+   /* Cor dos botões desabilitados */
+}
+
+.react-calendar__month-view__days__day--weekend {
+   color: #ff6600;
+   /* Cor laranja para os finais de semana */
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+   color: #666;
+   /* Cor mais clara para os dias do mês anterior */
+}

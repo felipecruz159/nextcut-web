@@ -19,6 +19,7 @@ import { ServiceFormData } from '@/app/types/generic';
 import { registerService } from '@/app/api/professional/register/registerService';
 import { useUser } from "@/app/context/user";
 import { toast } from "sonner";
+import { CirclePlus } from 'lucide-react';
 
 const ButtonNewService = () => {
    const [open, setOpen] = useState(false);
@@ -47,7 +48,7 @@ const ButtonNewService = () => {
    return (
       <Dialog open={open} onOpenChange={setOpen}>
          <DialogTrigger asChild>
-            <Button variant="outline">Adicionar Novo Serviço</Button>
+            <Button variant="outline" className='gap-2 '> <CirclePlus />Adicionar Novo Serviço</Button>
          </DialogTrigger>
          <DialogContent>
             <DialogHeader>
