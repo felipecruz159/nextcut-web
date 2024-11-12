@@ -38,11 +38,11 @@ const BookingItem = () => {
   console.log("bookings", bookings);
 
   return bookings.length > 0 ? (
-    <div className="h-full overflow-auto border p-2 rounded flex-col gap-1">
+    <div className="h-full overflow-auto p-2 gap-1">
       {/* // ? Show price? */}
       {/* // TODO: Create a "see details" button */}
       {bookings.map((book, index) => (
-        <Card className="p-0 my-1 h-full md:h-3/4">
+        <Card className="p-0 my-1 h-3/4">
           <CardContent
             key={index}
             className="py-0 px-0 flex flex-row justify-between h-full"
