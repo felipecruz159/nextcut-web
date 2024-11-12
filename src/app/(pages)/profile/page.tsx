@@ -87,7 +87,6 @@ export const Profile = () => {
         <div className="flex justify-between text-muted-foreground text-sm font-bold mt-1">
           {/* // TODO: Name is not refreshing according to database, maybe create a function that returns the name from the database */}
           <p className="">{session?.user?.email}</p>
-          {/* // TODO: Make it a count() function */}
           <div className="flex gap-1">
             <Link href="#">
               {/* <p className="hover:text-primary hover:underline cursor-pointer font-light"> */}

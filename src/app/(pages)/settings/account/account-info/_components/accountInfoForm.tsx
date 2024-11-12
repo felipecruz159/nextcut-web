@@ -34,10 +34,11 @@ export const AccountInfoForm = () => {
       return;
     }
 
-    if (!phone || phone.includes("_")) {
-      setError("Por favor, preencha o telefone completo.");
-      return;
-    }
+    // * Phone is not a required field in the moment
+    // if (!phone || phone.includes("_")) {
+    //   setError("Por favor, preencha o telefone completo.");
+    //   return;
+    // }
 
     setError("");
     try {

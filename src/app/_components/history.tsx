@@ -12,12 +12,11 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Ibarber, ServiceFormData } from "../types/generic";
 
-// TODO: Create the user's booking history
 interface HistoryProps {
   email?: string;
 }
 
-interface Bookings {
+export interface Bookings {
   id: string;
   barbershopId: string;
   barbershop: Ibarber;
@@ -26,7 +25,7 @@ interface Bookings {
   userId: string;
   status: string;
   paymentMethod: string;
-  // FIXME: // ! Change date type;
+  // FIXME: // ! Change date type, it probably will affect the booking.tsx component
   date: string;
 }
 

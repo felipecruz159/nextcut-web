@@ -1,9 +1,9 @@
 import { axiosInstance } from "@/app/_helpers/axios-instance";
 import { BookingsProps } from "@/app/types/BookingsProps";
 
-export const getBookings = async ({ email }: BookingsProps) => {
+export const getNextBookings = async ({ email }: BookingsProps) => {
     try {
-        const response = await axiosInstance.get(`/get-bookings`, {
+        const response = await axiosInstance.get(`/get-next-bookings`, {
             params: { email: email },
         });
         return response.data.bookings;
