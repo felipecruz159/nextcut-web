@@ -6,7 +6,7 @@ export const getNextBookings = async ({ email }: BookingsProps) => {
         const response = await axiosInstance.get(`/get-next-bookings`, {
             params: { email: email },
         });
-        return response.data.bookings;
+        return response.data;
     } catch(err){
         console.error("Error getting bookings:", err);
         throw err;

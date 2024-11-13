@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+// TODO: Remove this screen when user is professional
 const WorkWithUs = () => {
    const router = useRouter();
 

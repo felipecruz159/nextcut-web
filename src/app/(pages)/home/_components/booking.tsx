@@ -16,35 +16,88 @@ import { useEffect, useState } from "react";
 import { Bookings } from "@/app/_components/history";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { createDropdownMenuScope } from "@radix-ui/react-dropdown-menu";
+
+type ScreenOptions = "services" | "schedulings";
 
 const BookingItem = () => {
   const { user } = useUser();
 
   const [bookings, setBookings] = useState<Bookings[]>([]);
+  const [screen, setScreen] = useState<ScreenOptions>("services");
 
   useEffect(() => {
     const fetchBookings = async () => {
       if (user?.email) {
         const bookingsData = await getNextBookings({ email: user.email });
-        if (bookingsData.length > 0) {
-          setBookings(bookingsData);
+        console.log(bookingsData.combinedBookings);
+
+        // TODO: Add loading
+
+        // Filtro baseado na tela selecionada
+        let filteredBookings = bookingsData.combinedBookings;
+
+        if (screen === "schedulings") {
+          filteredBookings = bookingsData.combinedBookings.filter(
+            (book: Bookings) => book.userId === user.id
+          );
+        }
+
+        // Define os agendamentos filtrados
+        if (filteredBookings.length > 0) {
+          setBookings(filteredBookings);
         }
       }
     };
 
     fetchBookings();
-  }, [user]);
+  }, [user, screen]);
 
+  type BookingMenuTabProps = {
+    title: string;
+    value: ScreenOptions;
+  };
+
+  const bookingMenuTabs: BookingMenuTabProps[] = [
+    {
+      title: "Meu Estabelecimento",
+      value: "services",
+    },
+    {
+      title: "Meus Agendamentos",
+      value: "schedulings",
+    },
+  ];
+
+  const handleMenuClick = (value: ScreenOptions) => {
+    setScreen(value);
+    console.log("screen", screen);
+  };
+
+  const BookingMenu = () => (
+    <div className="w-full border rounded-xl flex md:flex-row flex-col gap-2 p-2">
+      {bookingMenuTabs.map((tab) => (
+        <Button
+          key={tab.value}
+          variant={"secondary"}
+          onClick={() => handleMenuClick(tab.value)}
+        >
+          {tab.title}
+        </Button>
+      ))}
+    </div>
+  );
+
+  // FIXME: // ! Adjust frontend when change screen
   return bookings.length > 0 ? (
     <div className="h-full overflow-auto p-2 gap-1">
       {/* // ? Show price? */}
       {/* // TODO: Create a "see details" button */}
+
+      {user?.type === "professional" && <BookingMenu />}
       {bookings.map((book, index) => (
-        <Card className="p-0 my-1 h-3/4">
-          <CardContent
-            key={index}
-            className="py-0 px-0 flex flex-row justify-between h-full"
-          >
+        <Card key={index} className="p-0 my-1 h-2/4">
+          <CardContent className="py-0 px-0 flex flex-row justify-between h-full">
             <div className="p-5 flex flex-col gap-2 justify-center">
               <Badge className="w-fit bg-[#fa4b005b] text-primary hover:bg-[#fa4b005b]">
                 Confirmado
