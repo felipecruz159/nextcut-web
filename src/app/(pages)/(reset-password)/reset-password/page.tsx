@@ -64,7 +64,7 @@ export const ResetPassword = () => {
         <div className="max-w-2xl m-auto relative">
           <div className="w-2/4 h-4/5 bg-primary/20 absolute -z-10 rounded-full blur-3xl"></div>
           <Image
-            src="/assets/viewLogin.svg"
+            src="/assets/viewSecurePassword.svg"
             alt="Imagem Login"
             objectFit="contain"
             width={1000}

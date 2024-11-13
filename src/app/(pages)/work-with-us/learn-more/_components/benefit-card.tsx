@@ -16,18 +16,18 @@ const BenefitCard = () => {
             width={0}
             height={0}
             className="h-[159px] w-[150px] md:w-[290px] object-cover rounded-xl"
-            src={"/assets/temp.jpg"}
+            src={"/assets/1.jpg"}
           />
         </div>
         <div className="p-2">
-          <h2 className="text-nowrap text-ellipsis overflow-hidden">{}</h2>
+          <h2 className="text-nowrap text-ellipsis overflow-hidden">{ }</h2>
           <p className="text-muted-foreground text-xs items-center overflow-hidden text-ellipsis text-nowrap">
-            {}
+            { }
           </p>
         </div>
-          <div className="col-span-2 md:col-span-3 text-justify p-2">
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vel ea distinctio sequi sunt, alias commodi accusantium, recusandae rerum a eos nisi assumenda voluptatum nobis reiciendis doloremque. Similique perspiciatis minus cum.</p>
-          </div>
+        <div className="col-span-2 md:col-span-3 text-justify p-2">
+          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vel ea distinctio sequi sunt, alias commodi accusantium, recusandae rerum a eos nisi assumenda voluptatum nobis reiciendis doloremque. Similique perspiciatis minus cum.</p>
+        </div>
       </CardContent>
     </Card>
   );

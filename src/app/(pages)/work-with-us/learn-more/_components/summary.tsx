@@ -69,7 +69,7 @@ const Summary = () => {
       <div className="lg:w-2/5 w-full flex flex-col">
         <div className="hidden lg:block lg:h-2/5">
           <Image
-            src="/assets/temp.jpg"
+            src="/assets/backgroundLearn-more2.jpg"
             width={10000}
             height={1000}
             alt="image"
@@ -166,7 +166,7 @@ const Summary = () => {
         </div>
         <div className="hidden lg:block">
           <Image
-            src="/assets/temp.jpg"
+            src="/assets/backgroundLearn-more3.jpg"
             width={10000}
             height={1000}
             alt="image"

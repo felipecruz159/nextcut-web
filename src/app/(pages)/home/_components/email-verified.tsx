@@ -2,7 +2,7 @@
 import { Button } from "@/app/_components/ui/button";
 import { axiosInstance } from "@/app/_helpers/axios-instance";
 import { useUser } from "@/app/context/user";
-import { Mail } from "lucide-react";
+import { Mail, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -41,22 +41,34 @@ const VerifiedEmail = () => {
     }
   };
 
+  const handleClose = () => {
+    setIsVisible(false);
+  };
+
   return (
     <>
       {isVisible && (
-        <div className="bg-primary flex justify-evenly w-full h-6 items-center">
-          <div className="flex gap-2">
+        <div className="bg-primary flex justify-evenly items-center w-full h-6 p-2">
+          <div className="flex gap-2 items-center">
             <Mail />
-            <p>Por favor verifique o seu email clicando no botão ao lado!</p>
+            <p className="text-white">Por favor verifique o seu email clicando no botão ao lado!</p>
           </div>
-          <Button
-            className="m-1 text-white underline"
-            variant={'link'}
-            onClick={handleVerifyEmail}
-            disabled={disabled}
-          >
-            Verificar email
-          </Button>
+          <div className="flex items-center">
+            <Button
+              className="m-1 text-white underline"
+              variant="link"
+              onClick={handleVerifyEmail}
+              disabled={disabled}
+            >
+              Verificar email
+            </Button>
+            <Button
+              className="text-white p-0 ml-2 h-fit bg-black"
+              onClick={handleClose}
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
       )}
     </>

@@ -19,7 +19,7 @@ const WorkWithUs = () => {
          <div className="h-screen container gap-6 grid grid-rows-2 md:grid-cols-2 md:grid-rows-1 place-content-center place-items-center">
             <div className="col-span-1 row-span-1 max-w-96 md:max-w-max m-auto">
                <Image
-                  src="/assets/viewLogin.svg"
+                  src="/assets/viewWorkUs.svg"
                   alt="Imagem Login"
                   objectFit="contain"
                   width={1000}

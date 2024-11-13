@@ -87,7 +87,7 @@ export const ResetPasswordEmail = () => {
         <div className="max-w-2xl m-auto relative">
           <div className="w-2/4 h-4/5 bg-primary/20 absolute -z-10 rounded-full blur-3xl"></div>
           <Image
-            src="/assets/viewLogin.svg"
+            src="/assets/viewForgotPassword.svg"
             alt="Imagem Login"
             objectFit="contain"
             width={1000}
@@ -147,9 +147,8 @@ export const ResetPasswordEmail = () => {
               <Button
                 onClick={handleResendEmail}
                 disabled={!state.canResend}
-                className={`bg-transparent ${
-                  state.canResend ? "text-white" : "text-gray-400"
-                } hover:bg-transparent hover:text-primary`}
+                className={`bg-transparent ${state.canResend ? "text-white" : "text-gray-400"
+                  } hover:bg-transparent hover:text-primary`}
               >
                 {state.canResend ? "Reenviar" : `Aguarde ${state.timer}s`}
               </Button>

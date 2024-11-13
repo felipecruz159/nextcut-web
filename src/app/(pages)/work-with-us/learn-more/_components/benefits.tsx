@@ -37,7 +37,7 @@ const Benefits = () => {
           </div>
         </div>
         <Image
-          src="/assets/temp.jpg"
+          src="/assets/backgroundLearn-more1.jpg"
           width={10000}
           height={1000}
           alt="image"
