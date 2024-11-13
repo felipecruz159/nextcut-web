@@ -1,19 +1,23 @@
 'use client'
-import { useState, useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { useUser } from '@/app/context/user';
-import { Smartphone, Clock, MapPin, Edit } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/app/_components/ui/dialog';
 import { Button } from '@/app/_components/ui/button';
+import { Dialog, DialogContent, DialogFooter, DialogTitle } from '@/app/_components/ui/dialog';
 import { Input } from '@/app/_components/ui/input';
 import { Textarea } from '@/app/_components/ui/textarea';
-import InputMask from 'react-input-mask';
+import { editInformation } from '@/app/api/professional/searchService';
+import { useUser } from '@/app/context/user';
 import axios from 'axios';
+import { Clock, Edit, MapPin, Smartphone } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import InputMask from 'react-input-mask';
+import { toast } from 'sonner';
+import { useRouter } from "next/navigation";
 
 const Information = () => {
    const { user } = useUser();
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [currentStep, setCurrentStep] = useState(1);
+   const router = useRouter();
 
    const [step1Data, setStep1Data] = useState({
       about: user?.barbershops?.about || '',
@@ -22,13 +26,13 @@ const Information = () => {
       phone: user?.barbershops?.phone || '',
    });
    const [step3Data, setStep3Data] = useState({
-      hours: user?.barbershops.operation || '',
+      operation: user?.barbershops.operation || '',
    });
    const [step4Data, setStep4Data] = useState({
       CEP: '',
       neighborhood: user?.address?.neighborhood || '',
       street: user?.address?.street || '',
-      number: user?.address?.number || '',
+      number: user?.address?.number || 0,
       state: user?.address?.state || '',
       city: user?.address?.city || '',
    });
@@ -62,13 +66,33 @@ const Information = () => {
    }, [CEP]);
 
    const onSubmit = async (data: any) => {
-      console.log('Dados finais do formulário: ', {
-         ...step1Data,
-         ...step2Data,
-         ...step3Data,
-         ...step4Data,
-      });
-      setIsModalOpen(false);
+      const barbershopId = user?.barbershops?.id;
+      if (!barbershopId) {
+         console.error("ID da barbearia não encontrado.");
+         return;
+      }
+
+      try {
+         const payload = {
+            ...step1Data,
+            ...step2Data,
+            ...step3Data,
+            ...step4Data,
+         };
+
+         const response = await editInformation(barbershopId, payload);
+
+         router.push('/my-barbershop')
+         if (response.status === 200) {
+            toast.success("Informações atualizadas com sucesso!");
+            setIsModalOpen(false);
+         } else {
+            toast.error("Erro ao atualizar as informações.");
+         }
+      } catch (error) {
+         console.error("Erro ao enviar dados para a API:", error);
+         toast.error("Erro ao atualizar as informações. Tente novamente.");
+      }
    };
 
    const renderStepContent = () => {
@@ -120,20 +144,19 @@ const Information = () => {
                <div>
                   <DialogTitle className="mb-3">Editar Horário de Funcionamento</DialogTitle>
                   <Controller
-                     name="hours"
+                     name="operation"
                      control={control}
                      render={({ field }) => (
                         <Textarea
                            {...field}
-                           value={step3Data.hours}
-                           onChange={(e) => setStep3Data({ ...step3Data, hours: e.target.value })}
+                           value={step3Data.operation}
+                           onChange={(e) => setStep3Data({ ...step3Data, operation: e.target.value })}
                            rows={5}
                            placeholder={`Digite o horário de funcionamento
                               
 ✔️ Seg - Sex: 9h - 20h | Sáb: 9h - 14h
 ❌ Quarta`}
                         />
-
                      )}
                   />
                </div>
@@ -190,7 +213,11 @@ const Information = () => {
                            {...field}
                            placeholder="Número"
                            value={step4Data.number}
-                           onChange={(e) => setStep4Data({ ...step4Data, number: e.target.value })}
+                           onChange={(e) => {
+                              // Ensure number is treated as a number (convert string to number)
+                              const newNumber = e.target.value ? Number(e.target.value) : 0;
+                              setStep4Data({ ...step4Data, number: newNumber });
+                           }}
                         />
                      )}
                   />
@@ -240,7 +267,6 @@ const Information = () => {
          </Button>
 
          <div>
-            {/* Informações da barbearia */}
             <div className="mb-4">
                <h2 className="font-semibold text-lg text-muted-foreground mb-1">Sobre nós</h2>
                <p>{user?.barbershops?.about || 'Informações não disponíveis'}</p>
@@ -263,12 +289,10 @@ const Information = () => {
             <div className="mb-4">
                <h2 className="font-semibold text-lg text-muted-foreground mb-1">Localização</h2>
                <p className="flex items-center gap-2">
-                  <MapPin size={18} /> {user?.address ? `${user.address.street}, ${user.address.city}` : 'Localização não disponível'}
+                  <MapPin size={18} /> {user?.address ? `${user.address.street} - ${user.address.number}, ${user.address.neighborhood} - ${user.address.city}` : 'Localização não disponível'}
                </p>
             </div>
          </div>
-
-
 
          <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
             <DialogContent className="max-w-2xl">
