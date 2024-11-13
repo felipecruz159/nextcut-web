@@ -24,7 +24,7 @@ const MyBarberShop = () => {
                   <ChevronLeft strokeWidth={2} size={24} />
                </Button>
             </div>
-            {user.barbershops.imageUrl ? (
+            {user.barbershops?.imageUrl ? (
                <Image
                   src={`${imagebarberShop.defaults.baseURL}${user.barbershops.imageUrl}`}
                   fill
@@ -38,13 +38,13 @@ const MyBarberShop = () => {
             )}
          </div>
          <div className="px-6 py-4">
-            <h2 className="text-xl mb-2">{user.barbershops.name}</h2>
+            <h2 className="text-xl mb-2">{user.barbershops?.name}</h2>
 
             <div className="flex justify-between">
-               <div className="sm:flex flex-col gap-2 hidden ">
+               <div className="sm:flex flex-col gap-2 hidden">
                   <div className="flex flex-row gap-2 items-center">
                      <MapPin size={18} className="text-primary" />
-                     <p className="text-sm">{`${user.address.neighborhood ?? 'Sem endereço disponível'}, ${user.address.number}`}</p>
+                     <p className="text-sm">{`${user.address?.neighborhood ?? 'Sem endereço disponível'}, ${user.address?.number}`}</p>
                   </div>
                   <div className="flex flex-row gap-2 items-center">
                      <Star size={18} className="text-primary" />

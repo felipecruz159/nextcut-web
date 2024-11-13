@@ -9,3 +9,13 @@ export const searchService = async (userId: string) => {
       return [];
    }
 };
+
+export const editInformation = async (barbershopId: string, payload: object) => {
+   try {
+      const response = await axiosInstance.put(`information/edit/${barbershopId}`, payload);
+      return response;
+   } catch (error) {
+      console.error("Erro ao enviar informações:", error);
+      throw error;
+   }
+};
