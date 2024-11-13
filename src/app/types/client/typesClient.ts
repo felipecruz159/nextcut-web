@@ -39,6 +39,7 @@ export interface UserType {
    barbershops: BarbershopType;
    address: AddressType;
    ratings: RatingType;
+   emailVerified: boolean;
 };
 
 interface BarbershopType {

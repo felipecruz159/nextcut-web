@@ -43,6 +43,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
                      barbershops: response.data.user.barbershop || null,
                      address: response.data.user.address || null,
                      ratings: response.data.user.ratings || null,
+                     emailVerified: response.data.user.emailVerified || null,
                   };
                   setUser(userData);
                }

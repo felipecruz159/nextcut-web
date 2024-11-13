@@ -35,8 +35,6 @@ const BookingItem = () => {
     fetchBookings();
   }, [user]);
 
-  console.log("bookings", bookings);
-
   return bookings.length > 0 ? (
     <div className="h-full overflow-auto p-2 gap-1">
       {/* // ? Show price? */}

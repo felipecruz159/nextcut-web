@@ -3,11 +3,13 @@ import Search from "./_components/search";
 import Categories from "./_components/categories";
 import BookingItem from "./_components/booking";
 import Cards from "./_components/cards";
+import VerifiedEmail from "./_components/email-verified";
 
 export default async function Home() {
   return (
     <div>
       <Header />
+      <VerifiedEmail />
 
       <div className="grid grid-cols-1 md:grid-cols-2 grid-rows-2 md:container mx-5 mt-6 gap-x-4">
         <div className=" mt-6">
