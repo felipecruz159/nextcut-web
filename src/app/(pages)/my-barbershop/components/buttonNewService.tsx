@@ -21,7 +21,11 @@ import { useUser } from "@/app/context/user";
 import { toast } from "sonner";
 import { CirclePlus } from 'lucide-react';
 
-const ButtonNewService = () => {
+type ButtonNewServiceProps = {
+   onServiceAdded: () => void;
+};
+
+const ButtonNewService: React.FC<ButtonNewServiceProps> = ({ onServiceAdded }) => {
    const [open, setOpen] = useState(false);
    const { register, handleSubmit, setValue, formState: { errors } } = useForm<ServiceFormData>();
    const { user } = useUser();
@@ -39,6 +43,7 @@ const ButtonNewService = () => {
 
          const response = await registerService(convertedData);
          toast.success('Serviço registrado com sucesso!');
+         onServiceAdded();
          setOpen(false);
       } catch (error) {
          toast.error('Erro ao registrar serviço!');

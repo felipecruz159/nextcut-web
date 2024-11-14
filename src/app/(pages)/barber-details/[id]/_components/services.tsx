@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import ButtonNewService from "./buttonNewService";
 import { Clock } from "lucide-react";
 import { Button } from "@/app/_components/ui/button";
 import { Badge } from "@/app/_components/ui/badge";
@@ -11,30 +10,30 @@ import {
    CardHeader,
    CardTitle,
 } from "@/app/_components/ui/card";
-import { useUser } from "@/app/context/user";
-import { searchService } from "@/app/api/professional/searchService";
+import { searchServiceClient } from "@/app/api/professional/searchService";
 import { ServiceFormData } from "@/app/types/generic";
 import { PiScissors } from "react-icons/pi";
 import { GiBeard, GiHandOk } from "react-icons/gi";
 import { MdOutlineFaceRetouchingNatural } from "react-icons/md";
 import { BsStars } from "react-icons/bs";
 
-const Services = () => {
-   const { user } = useUser();
+const Services = ({ barberShopId }: { barberShopId: string }) => {
    const [services, setServices] = useState<ServiceFormData[]>([]);
    const [isLoading, setIsLoading] = useState(true);
 
    const fetchServices = async () => {
-      if (!user?.id) return;
+      if (!barberShopId) return;
       setIsLoading(true);
-      const servicesData = await searchService(user.id);
+      const servicesData = await searchServiceClient(barberShopId);
       setServices(servicesData);
       setIsLoading(false);
    };
 
+   console.log(services)
+
    useEffect(() => {
       fetchServices();
-   }, [user?.id]);
+   }, [barberShopId]);
 
    const getIcon = (icon: string) => {
       switch (icon) {
@@ -64,9 +63,7 @@ const Services = () => {
 
    return (
       <div>
-         <div className="mb-4">
-            <ButtonNewService onServiceAdded={fetchServices} />
-         </div>
+         <div className="mb-4"></div>
          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {isLoading ? (
                <p>Carregando serviços...</p>
@@ -98,7 +95,7 @@ const Services = () => {
                   </div>
                ))
             ) : (
-               <p>Nenhum serviço, clique em adicionar.</p>
+               <p className="text-muted-foreground">Atualmente, não há serviços cadastrados nesse estabelecimento!</p>
             )}
          </div>
       </div>

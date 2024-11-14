@@ -14,7 +14,7 @@ import { toast } from 'sonner';
 import { useRouter } from "next/navigation";
 
 const Information = () => {
-   const { user } = useUser();
+   const { user, updateUser } = useUser();
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [currentStep, setCurrentStep] = useState(1);
    const router = useRouter();
@@ -82,9 +82,25 @@ const Information = () => {
 
          const response = await editInformation(barbershopId, payload);
 
-         router.push('/my-barbershop')
          if (response.status === 200) {
             toast.success("Informações atualizadas com sucesso!");
+
+            const updatedUser = {
+               ...user,
+               barbershops: {
+                  ...user?.barbershops,
+                  about: step1Data.about,
+                  phone: step2Data.phone,
+                  operation: step3Data.operation,
+               },
+               address: {
+                  ...user?.address,
+                  ...step4Data,
+               },
+            };
+
+            updateUser(updatedUser);
+
             setIsModalOpen(false);
          } else {
             toast.error("Erro ao atualizar as informações.");
@@ -94,6 +110,7 @@ const Information = () => {
          toast.error("Erro ao atualizar as informações. Tente novamente.");
       }
    };
+
 
    const renderStepContent = () => {
       switch (currentStep) {

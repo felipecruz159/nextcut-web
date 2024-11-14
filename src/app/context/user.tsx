@@ -9,6 +9,7 @@ type UserContextType = {
    user: UserType | null;
    loading: boolean;
    logout: () => void;
+   updateUser: (updatedUser: UserType) => void;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -69,8 +70,13 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       setUser(null);
    };
 
+   // Função para atualizar os dados do usuário e barbearia
+   const updateUser = (updatedUser: UserType) => {
+      setUser(updatedUser);
+   };
+
    return (
-      <UserContext.Provider value={{ user, loading, logout }}>
+      <UserContext.Provider value={{ user, loading, logout, updateUser }}>
          {children}
       </UserContext.Provider>
    );

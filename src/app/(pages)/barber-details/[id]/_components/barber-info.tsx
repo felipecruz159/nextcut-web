@@ -4,16 +4,20 @@ import { axiosInstance } from "@/app/_helpers/axios-instance";
 import { imagebarberShop } from "@/app/_helpers/axios-instance";
 import { calculateStarRating } from "@/app/_lib/utils";
 import { Ibarber } from "@/app/types/generic";
-import { ChevronLeft, MapPin, Menu, Star } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { ChevronLeft, MapPin, Star, Accessibility, House } from "lucide-react";
+import { useUser } from "@/app/context/user";
+import Services from "./services";
+import Information from "./information";
 
 const BarberInfo = ({ params }: { params: { id: string } }) => {
    const router = useRouter();
    const [barber, setBarber] = useState<Ibarber | undefined>();
    const [isLoading, setLoading] = useState(false);
    const [error, setError] = useState<string | undefined>();
+   const [activeTab, setActiveTab] = useState<'services' | 'information'>('services');
 
    useEffect(() => {
       if (params?.id) {
@@ -63,18 +67,50 @@ const BarberInfo = ({ params }: { params: { id: string } }) => {
                </div>
                <div className="px-6 py-4">
                   <h2 className="text-xl mb-2">{barber.name}</h2>
-                  <div className="flex flex-row gap-2 items-center">
-                     <MapPin size={18} className="text-primary" />
-                     {barber.address?.neighborhood ?? 'Sem endereço disponível'}
-                  </div>
-                  <div className="flex flex-row gap-2 items-center">
-                     <Star size={18} className="text-primary" />
-                     {/* {barber.Rating.rating && barber.Rating.appraiser
-                        ? `${calculateStarRating(barber.Rating.rating, barber.Rating.appraiser)} (${barber.Rating.appraiser} avaliações)`
-                        : 'Sem avaliações'} */}
+                  <div className="flex justify-between">
+                     <div className="sm:flex flex-col gap-2 hidden">
+                        <div className="flex flex-row gap-2 items-center">
+                           <MapPin size={18} className="text-primary" />
+                           <p className="text-sm">{`${barber.address?.neighborhood ?? 'Sem endereço disponível'}, ${barber.address?.number}`}</p>
+                        </div>
+                        <div className="flex flex-row gap-2 items-center">
+                           <Star size={18} className="text-primary" />
+                           <p className="text-sm"></p>
+                        </div>
+                     </div>
+                     <div className="flex flex-col gap-2">
+                        <div className="flex flex-row gap-2 items-center">
+                           <Accessibility size={18} className="text-blue-400" />
+                           <p className="text-sm">Atendimentos Especiais</p>
+                        </div>
+                        <div className="flex flex-row gap-2 items-center">
+                           <House size={18} className="text-primary" />
+                           <p className="text-sm">Atendimento á domicílio</p>
+                        </div>
+                     </div>
                   </div>
                </div>
                <div className="border-b" />
+
+               <div className="flex justify-start gap-2 my-4 mx-4">
+                  <Button
+                     variant={activeTab === 'services' ? 'default' : 'outline'}
+                     onClick={() => setActiveTab('services')}
+                  >
+                     Serviços
+                  </Button>
+                  <Button
+                     variant={activeTab === 'information' ? 'default' : 'outline'}
+                     onClick={() => setActiveTab('information')}
+                  >
+                     Informações
+                  </Button>
+               </div>
+
+               <div className="px-4 py-2">
+                  {activeTab === 'services' ? <Services barberShopId={barber.id} /> : <Information />}
+               </div>
+
             </div>
          )}
       </div>

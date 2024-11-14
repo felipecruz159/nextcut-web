@@ -10,6 +10,16 @@ export const searchService = async (userId: string) => {
    }
 };
 
+export const searchServiceClient = async (barberShopId: string) => {
+   try {
+      const response = await axiosInstance.get(`services/client/${barberShopId}`);
+      return response.data;
+   } catch (error) {
+      console.error("Erro ao buscar serviços:", error);
+      return [];
+   }
+};
+
 export const editInformation = async (barbershopId: string, payload: object) => {
    try {
       const response = await axiosInstance.put(`information/edit/${barbershopId}`, payload);
