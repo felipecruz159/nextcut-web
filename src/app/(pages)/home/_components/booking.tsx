@@ -30,11 +30,10 @@ const BookingItem = () => {
     const fetchBookings = async () => {
       if (user?.email) {
         const bookingsData = await getNextBookings({ email: user.email });
-        console.log(bookingsData.combinedBookings);
+        // console.log(bookingsData.combinedBookings);
 
         // TODO: Add loading
 
-        // Filtro baseado na tela selecionada
         let filteredBookings = bookingsData.combinedBookings;
 
         if (screen === "schedulings") {
@@ -43,7 +42,6 @@ const BookingItem = () => {
           );
         }
 
-        // Define os agendamentos filtrados
         if (filteredBookings.length > 0) {
           setBookings(filteredBookings);
         }
