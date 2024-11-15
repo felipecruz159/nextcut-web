@@ -8,7 +8,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ChevronLeft, MapPin, Star, Accessibility, House } from "lucide-react";
-import { useUser } from "@/app/context/user";
 import Services from "./services";
 import Information from "./information";
 

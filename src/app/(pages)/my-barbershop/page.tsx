@@ -11,11 +11,14 @@ import { Dialog, DialogContent, DialogFooter, DialogTitle } from "@/app/_compone
 import { Input } from "@/app/_components/ui/input";
 import { Checkbox } from "@/app/_components/ui/checkbox";
 import { editInformationWithImage } from "@/app/api/professional/searchService";
+import { toast } from 'sonner';
+import { useRouter } from "next/navigation";
 
 const MyBarberShop = () => {
-   const { user } = useUser();
+   const { user, updateUser } = useUser();
    const [activeTab, setActiveTab] = useState<'services' | 'information'>('services');
    const [isModalOpen, setIsModalOpen] = useState(false);
+   const router = useRouter();
    const [formData, setFormData] = useState({
       name: '',
       specialService: false,
@@ -50,19 +53,32 @@ const MyBarberShop = () => {
             formDataToSend.append('barberShopBackground', formData.file);
          }
 
-         console.log('Dados enviados para a API:');
+         const updatedUser = {
+            ...user,
+            barbershops: {
+               ...user.barbershops,
+               name: formData.name,
+               specialService: formData.specialService,
+               homeService: formData.homeService,
+            },
+         };
+         updateUser(updatedUser);
+
          Array.from(formDataToSend.entries()).forEach(([key, value]) => {
             console.log(`${key}:`, value);
          });
 
          if (user?.barbershops?.id) {
             await editInformationWithImage(user.barbershops.id, formDataToSend);
+            toast.success("Informações atualizadas com sucesso!");
             setIsModalOpen(false);
          } else {
             console.error('ID da barbearia não encontrado.');
+            toast.success("Estabelecimento não encontrado!");
          }
       } catch (error) {
          console.error('Erro ao salvar informações:', error);
+         toast.success("Erro ao salvar informações!");
       }
    };
 
@@ -73,10 +89,11 @@ const MyBarberShop = () => {
    };
 
    return (
+
       <div className="max-w-screen-md m-auto">
          <div className="w-full mt-5 h-[250px] relative">
             <div className="absolute z-10 top-3 left-4">
-               <Button variant="secondary" className="px-3 py-5">
+               <Button variant="secondary" className="px-3 py-5" onClick={() => router.back()}>
                   <ChevronLeft strokeWidth={2} size={24} />
                </Button>
             </div>
@@ -100,7 +117,9 @@ const MyBarberShop = () => {
                <div className="sm:flex flex-col gap-2 hidden">
                   <div className="flex flex-row gap-2 items-center">
                      <MapPin size={18} className="text-primary" />
-                     <p className="text-sm">{`${user.address?.neighborhood ?? 'Sem endereço disponível'}, ${user.address?.number}`}</p>
+                     <p className="text-sm">{user.address ? `${user.address.street}, ${user.address.number} - ${user.address.neighborhood}` : 'Endereço não disponível'}
+
+                     </p>
                   </div>
                   <div className="flex flex-row gap-2 items-center">
                      <Star size={18} className="text-primary" />

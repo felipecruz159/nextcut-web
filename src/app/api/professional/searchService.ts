@@ -1,5 +1,6 @@
 import { axiosInstance } from "@/app/_helpers/axios-instance";
 import { AxiosError } from 'axios';
+
 export const searchService = async (userId: string) => {
    try {
       const response = await axiosInstance.get(`services/user/${userId}`);
@@ -29,6 +30,18 @@ export const searchInformationClient = async (barberShopId: string) => {
       return [];
    }
 };
+
+export const deleteService = async (serviceId: string): Promise<boolean> => {
+   try {
+      const response = await axiosInstance.delete(`/service/delete/${serviceId}`);
+      return true;
+   } catch (error: any) {
+      console.error("Erro ao excluir serviço:", error?.response?.data || error.message);
+      return false;
+   }
+};
+
+
 
 export const editInformation = async (barbershopId: string, payload: object) => {
    try {

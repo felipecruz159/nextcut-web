@@ -38,6 +38,7 @@ export interface Rating {
 
 export interface ServiceFormData {
    barbershopId: string | undefined;
+   id: string;
    name: string;
    description: string;
    category: string;
