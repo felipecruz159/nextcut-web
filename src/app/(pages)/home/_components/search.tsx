@@ -7,10 +7,14 @@ import { useSession } from "next-auth/react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Isession } from '@/app/types/client/typesClient';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const Search = () => {
    const [sessionData, setSessionData] = useState<Isession | null>(null);
    const { data: session, status } = useSession();
+   const search = useSearchParams();
+   const [searchQuery, setSearchQuery] = useState(search ? search.get("q") : "")
+   const router = useRouter();
 
    useEffect(() => {
       if (status === 'authenticated' && session?.user) {
@@ -25,6 +29,13 @@ const Search = () => {
          setSessionData(null);
       }
    }, [session, status]);
+
+   const onSearch = (e: React.FormEvent) => {
+      e.preventDefault();
+
+      const encodedSearchQuery = encodeURI(searchQuery || "");
+      router.push(`/?q=${encodedSearchQuery}`);
+   }
 
    return (
       <div className="flex flex-col gap-6">
@@ -54,12 +65,14 @@ const Search = () => {
          </div>
 
          <div>
-            <div className="flex flex-row items-center gap-2">
-               <Input placeholder="Busque por uma barbearia..." />
+            <form className="flex flex-row items-center gap-2" onSubmit={onSearch}>
+               <Input placeholder="Busque por uma barbearia..."
+               value={searchQuery || ""}
+               onChange={(e) => setSearchQuery(e.target.value)}/>
                <Button className="bg-primary px-3">
                   <SearchIcon />
                </Button>
-            </div>
+            </form>
          </div>
       </div>
    );
