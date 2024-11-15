@@ -44,3 +44,10 @@ export interface ServiceFormData {
    price: number;
    time: number;
 }
+
+export interface InfomationsData {
+   about: string;
+   phone: string;
+   operation: string;
+   address: Address;
+}

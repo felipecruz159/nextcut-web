@@ -18,7 +18,6 @@ export const registerProfessionalApi = async (data: FormData): Promise<void> => 
       data.forEach((value, key) => {
          formDataObject[key] = value;
       });
-      console.log('Dados do FormData:', formDataObject);
 
       await axiosInstance.post(`/register-professional`, data, {
          headers: {

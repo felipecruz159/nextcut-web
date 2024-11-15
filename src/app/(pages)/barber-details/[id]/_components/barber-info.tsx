@@ -108,7 +108,7 @@ const BarberInfo = ({ params }: { params: { id: string } }) => {
                </div>
 
                <div className="px-4 py-2">
-                  {activeTab === 'services' ? <Services barberShopId={barber.id} /> : <Information />}
+                  {activeTab === 'services' ? <Services barberShopId={barber.id} /> : <Information barberShopId={barber.id} />}
                </div>
 
             </div>

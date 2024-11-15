@@ -17,10 +17,9 @@ export const AccountInfoForm = () => {
   const [error, setError] = useState<string>("");
   const { user } = useUser();
   const router = useRouter();
-  
+
   useEffect(() => {
     if (!user) return;
-    // console.log(user);
     setEmail(user.email);
     setName(user.name);
     setPhone(user.phone);

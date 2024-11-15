@@ -49,6 +49,8 @@ interface BarbershopType {
    phone: string;
    about: string | null;
    operation: string | null;
+   homeService: boolean;
+   specialService: boolean;
 }
 
 interface AddressType {
