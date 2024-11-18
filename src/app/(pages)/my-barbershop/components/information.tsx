@@ -278,7 +278,7 @@ const Information = () => {
    };
 
    return (
-      <div>
+      <div className='mb-24'>
          <Button className="mb-4 gap-2" variant="outline" onClick={() => setIsModalOpen(true)}>
             <Edit size={16} /> Editar Informações
          </Button>

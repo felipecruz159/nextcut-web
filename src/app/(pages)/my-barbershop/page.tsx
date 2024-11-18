@@ -13,10 +13,11 @@ import { Checkbox } from "@/app/_components/ui/checkbox";
 import { editInformationWithImage } from "@/app/api/professional/searchService";
 import { toast } from 'sonner';
 import { useRouter } from "next/navigation";
+import Operation from "./components/operation";
 
 const MyBarberShop = () => {
    const { user, updateUser } = useUser();
-   const [activeTab, setActiveTab] = useState<'services' | 'information'>('services');
+   const [activeTab, setActiveTab] = useState<'services' | 'information' | 'operation'>('services');
    const [isModalOpen, setIsModalOpen] = useState(false);
    const router = useRouter();
    const [formData, setFormData] = useState({
@@ -170,10 +171,22 @@ const MyBarberShop = () => {
             >
                Informações
             </Button>
+            <Button
+               variant={activeTab === 'operation' ? 'default' : 'outline'}
+               onClick={() => setActiveTab('operation')}
+            >
+               Funcionamento
+            </Button>
          </div>
 
          <div className="px-4 py-2">
-            {activeTab === 'services' ? <Services /> : <Information />}
+            {activeTab === 'services' ? (
+               <Services />
+            ) : activeTab === 'information' ? (
+               <Information />
+            ) : (
+               <Operation />
+            )}
          </div>
 
          <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
