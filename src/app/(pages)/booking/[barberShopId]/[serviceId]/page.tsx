@@ -1,0 +1,213 @@
+'use client';
+
+import AlternativeHeader from "@/app/_components/alternativeHeader";
+import { Button } from "@/app/_components/ui/button";
+import { RadioGroup, RadioGroupItem } from "@/app/_components/ui/radio-group";
+import { getTimeService } from "@/app/api/professional/time";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import BarberUser from "./components/barberUser";
+import CalendarBooking from "./components/calendar";
+import { searchServiceById } from "@/app/api/professional/searchService";
+import { ServiceFormData } from "@/app/types/generic";
+import { useForm, Controller } from "react-hook-form";
+import { Checkbox } from "@/app/_components/ui/checkbox";
+
+type Schedule = {
+   id: string;
+   time: string;
+   available: boolean;
+};
+
+type Period = 'manhã' | 'tarde' | 'noite';
+
+const Booking = ({ params }: { params: { barberShopId: string; serviceId: string } }) => {
+   const { barberShopId, serviceId } = params;
+   const router = useRouter();
+   const [schedules, setSchedules] = useState<Schedule[]>([]);
+   const [service, setService] = useState<ServiceFormData | undefined>();
+   const [selectedPeriod, setSelectedPeriod] = useState<Period | null>(null);
+   const [selectedSchedule, setSelectedSchedule] = useState<Schedule | null>(null);
+   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+   const { handleSubmit, control, watch, setValue } = useForm({
+      defaultValues: {
+         localService: "",
+         domicileService: "",
+         specialService: true
+      }
+   });
+
+   const formatHour = (time: string) => {
+      const date = new Date(time);
+      return date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', hour12: false });
+   };
+
+   const getPeriod = (time: string): Period => {
+      const hour = new Date(time).getHours();
+      if (hour < 12) return 'manhã';
+      if (hour < 18) return 'tarde';
+      return 'noite';
+   };
+
+   const periods: Record<Period, Schedule[]> = {
+      manhã: (schedules || []).filter(schedule => getPeriod(schedule.time) === 'manhã'),
+      tarde: (schedules || []).filter(schedule => getPeriod(schedule.time) === 'tarde'),
+      noite: (schedules || []).filter(schedule => getPeriod(schedule.time) === 'noite'),
+   };
+
+   useEffect(() => {
+      if (barberShopId) {
+         const fetchSchedules = async () => {
+            const fetchedSchedules = await getTimeService(barberShopId);
+            setSchedules(fetchedSchedules);
+         };
+
+         fetchSchedules();
+      }
+   }, [barberShopId]);
+
+   const fetchServices = async () => {
+      if (!serviceId) return;
+      setIsLoading(true);
+      const servicesData = await searchServiceById(serviceId);
+      setService(servicesData);
+      setIsLoading(false);
+   };
+
+   useEffect(() => {
+      fetchServices();
+   }, [serviceId]);
+
+   const handleBooking = (data: any) => {
+      if (!selectedSchedule) {
+         alert("Por favor, selecione um horário");
+         return;
+      }
+
+      console.log("Horário Selecionado:", formatHour(selectedSchedule.time));
+      console.log("Período Selecionado:", selectedPeriod);
+      console.log("Atendimento Local:", data.localService);
+      console.log("Atendimento Domicílio:", data.domicileService);
+      console.log("Atendimento Especial:", data.specialService);
+   };
+
+   const handleServiceChange = (name: "localService" | "domicileService", value: string) => {
+      if (name === 'localService' && value === 'true') {
+         setValue('domicileService', '');
+      }
+      if (name === 'domicileService' && value === 'true') {
+         setValue('localService', '');
+      }
+      setValue(name, value);
+   };
+
+   return (
+      <div className="container">
+         <AlternativeHeader variant="title" title="Agendamento" />
+         <div className="mb-4">
+            <BarberUser barberShopId={barberShopId} />
+         </div>
+         <div className="max-w-[700px] m-auto mb-6">
+            <CalendarBooking />
+         </div>
+
+         <div className="mb-4">
+            <div className="space-y-6">
+               <h2 className="text-xl font-bold">Horários Disponíveis</h2>
+               <div className="flex justify-center space-x-4">
+                  {Object.keys(periods).map((period) => (
+                     <Button
+                        key={period}
+                        variant={selectedPeriod === period ? 'default' : 'outline'}
+                        onClick={() =>
+                           setSelectedPeriod(selectedPeriod === period ? null : (period as Period))
+                        }
+                        className="capitalize min-w-fit"
+                     >
+                        {period}
+                     </Button>
+                  ))}
+               </div>
+
+               {selectedPeriod && (
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-4 mt-6 justify-items-center">
+                     {periods[selectedPeriod].map((schedule: Schedule) => (
+                        <Button
+                           key={schedule.id}
+                           onClick={() => setSelectedSchedule(schedule)}
+                           disabled={!schedule.available}
+                           className={`w-[70px] ${schedule.available ? '' : 'opacity-50 cursor-not-allowed'} 
+                           ${selectedSchedule?.id === schedule.id ? 'bg-blue-500 text-white' : ''}`}
+                        >
+                           {formatHour(schedule.time)}
+                        </Button>
+                     ))}
+                  </div>
+               )}
+
+               {!selectedPeriod && (
+                  <p className="text-center text-gray-500">Selecione um período para visualizar os horários.</p>
+               )}
+            </div>
+         </div>
+
+         <div className="mb-4">
+            <h2 className="text-xl">Serviço</h2>
+            {isLoading ? (
+               <p>Carregando serviço...</p>
+            ) : service ? (
+               service.name
+            ) : (
+               <p>Serviço não encontrado</p>
+            )}
+         </div>
+
+         <form onSubmit={handleSubmit(handleBooking)} className="mb-4">
+            <h2 className="text-xl mb-2">Local do atendimento</h2>
+            <div>
+               <Controller
+                  name="localService"
+                  control={control}
+                  render={({ field }) => (
+                     <RadioGroup value={field.value} onValueChange={(value) => handleServiceChange('localService', value)}>
+                        <div className="flex items-center space-x-2">
+                           <RadioGroupItem value="true" id="localService" />
+                           <label htmlFor="localService" className="ml-2 text-sm">Atendimento no estabelecimento</label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                           <RadioGroupItem value="false" id="domicileService" />
+                           <label htmlFor="domicileService" className="ml-2 text-sm">Domicílio — será cobrado uma taxa adicional</label>
+                        </div>
+                     </RadioGroup>
+                  )}
+               />
+            </div>
+
+            <div>
+               <h2 className="text-xl mb-2">Atendimento</h2>
+               <Controller
+                  name="specialService"
+                  control={control}
+                  render={({ field }) => (
+                     <div className="flex items-center">
+                        <Checkbox
+                           id="specialService"
+                           checked={field.value}
+                           onCheckedChange={(checked) => field.onChange(checked)}
+                        />
+                        <label htmlFor="specialService" className="ml-2 text-sm">Atendimento Especial</label>
+                     </div>
+                  )}
+               />
+            </div>
+
+            <Button type="submit" className="mt-4">
+               Confirmar Agendamento
+            </Button>
+         </form>
+      </div>
+   );
+};
+
+export default Booking;

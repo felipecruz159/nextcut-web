@@ -1,96 +1,75 @@
-/* Calendar.css */
-
+/* Ajusta o layout do calendário */
 .react-calendar {
-   border: 2px solid #888;
-   /* Borda cinza */
-   border-radius: 10px;
-   /* Bordas arredondadas */
-   background-color: #222;
-   /* Fundo preto */
+   max-width: 100%;
+   background-color: transparent;
+   border: none;
    color: #fff;
-   /* Texto branco */
+   text-align: center;
+   margin-top: 5px;
+   /* Remover gap para evitar problemas de layout */
 }
 
+/* Ajusta o estilo dos dias */
 .react-calendar__tile {
-   background-color: #333;
-   /* Fundo dos dias */
-   color: #fff;
-   /* Cor dos números */
+   height: 100px;
+   max-height: 100px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background-color: transparent;
+   color: #ffffff;
    border-radius: 8px;
-   /* Bordas arredondadas nos dias */
+   padding: 0;
+   margin-top: 5px;
+   /* Ajusta o espaçamento vertical */
+   /* Ajusta o espaçamento horizontal entre os dias */
+   flex: 0 0 0;
+   /* Garante que o dia ocupe o tamanho adequado */
 }
 
-.react-calendar__tile:enabled:hover {
-   background-color: #ff6600;
-   /* Cor laranja ao passar o mouse */
-}
-
-.react-calendar__tile:enabled:active {
-   background-color: #cc5200;
-   /* Cor laranja mais escura ao clicar */
-}
-
-.react-calendar__tile:disabled {
-   background-color: #555;
-   /* Cor dos dias desabilitados */
-   color: #aaa;
-   /* Texto dos dias desabilitados */
-   cursor: not-allowed;
-   /* Cursor de "não permitido" */
-}
-
-.react-calendar__tile--today {
-   background-color: #ff6600;
-   /* Cor laranja para o dia atual */
-   color: #fff;
-   /* Texto branco no dia atual */
-   font-weight: bold;
-   /* Deixar o texto mais forte no dia atual */
-}
-
-/* Estilo para os dias desabilitados (antes de ontem) */
-.react-calendar__tile--disabled {
-   background-color: #444;
-   /* Cor de fundo mais escura */
-   color: #888;
-   /* Cor do texto mais desbotada */
-}
-
-/* Estilo para o dia selecionado */
+/* Estilo do dia selecionado */
 .react-calendar__tile--active {
-   background-color: #ff6600;
-   /* Cor laranja para o dia selecionado */
+   background-color: rgba(255, 102, 0, 0.9);
    color: white;
-   /* Texto branco */
    font-weight: bold;
-   /* Deixar o texto mais forte no dia selecionado */
+   box-shadow: 0px 0px 10px 5px rgba(255, 102, 0, 1);
+   transform: scale(1.01);
+   transition: all 0.3s ease;
 }
 
+/* Estilo do dia atual */
+.react-calendar__tile--today {
+   background-color: rgba(255, 102, 0, 1);
+   color: white;
+   font-weight: bolder;
+}
+
+/* Estilo dos dias desabilitados */
+.react-calendar__tile--disabled {
+   background-color: transparent;
+   color: #a70000;
+   cursor: not-allowed;
+}
+
+/* Botões de navegação */
 .react-calendar__navigation button {
-   background-color: #444;
-   /* Fundo dos botões de navegação */
+   background-color: transparent;
    color: #fff;
-   /* Cor dos ícones */
-   border-radius: 5px;
-   /* Bordas arredondadas nos botões */
+   border: none;
+   margin-bottom: 20px;
 }
 
 .react-calendar__navigation button:hover {
-   background-color: #ff6600;
-   /* Laranja ao passar o mouse nos botões */
+   background-color: rgba(255, 102, 0, 0.8);
 }
 
-.react-calendar__navigation button:disabled {
-   background-color: #555;
-   /* Cor dos botões desabilitados */
-}
+/* Responsividade */
+@media (max-width: 600px) {
+   .react-calendar {
+      width: 100%;
+   }
 
-.react-calendar__month-view__days__day--weekend {
-   color: #ff6600;
-   /* Cor laranja para os finais de semana */
-}
-
-.react-calendar__month-view__days__day--neighboringMonth {
-   color: #666;
-   /* Cor mais clara para os dias do mês anterior */
+   .react-calendar__tile {
+      height: 70px;
+   }
 }

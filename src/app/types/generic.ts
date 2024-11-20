@@ -17,7 +17,17 @@ export interface Ibarber {
    address: Address;
    appraiser: number;
    Rating: Rating;
+   User: UserType
 }
+
+export interface UserType {
+   id: string;
+   email: string;
+   name: string;
+   type: string;
+   phone: string | null;
+   emailVerified: boolean;
+};
 
 export interface Address {
    neighborhood: string;

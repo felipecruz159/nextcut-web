@@ -16,10 +16,12 @@ import { PiScissors } from "react-icons/pi";
 import { GiBeard, GiHandOk } from "react-icons/gi";
 import { MdOutlineFaceRetouchingNatural } from "react-icons/md";
 import { BsStars } from "react-icons/bs";
+import { useRouter } from "next/navigation";
 
 const Services = ({ barberShopId }: { barberShopId: string }) => {
    const [services, setServices] = useState<ServiceFormData[]>([]);
    const [isLoading, setIsLoading] = useState(true);
+   const router = useRouter();
 
    const fetchServices = async () => {
       if (!barberShopId) return;
@@ -29,7 +31,9 @@ const Services = ({ barberShopId }: { barberShopId: string }) => {
       setIsLoading(false);
    };
 
-   console.log(services)
+   const handleBooking = (serviceId: string) => {
+      router.push(`/booking/${barberShopId}/${serviceId}`);
+   };
 
    useEffect(() => {
       fetchServices();
@@ -42,7 +46,6 @@ const Services = ({ barberShopId }: { barberShopId: string }) => {
          case "barba":
             return <GiBeard className="w-5 h-5 opacity-70" />;
          case "rosto":
-            return <MdOutlineFaceRetouchingNatural className="w-5 h-5 opacity-70" />;
          case "estetica":
             return <MdOutlineFaceRetouchingNatural className="w-5 h-5 opacity-70" />;
          case "unhas":
@@ -69,7 +72,7 @@ const Services = ({ barberShopId }: { barberShopId: string }) => {
                <p>Carregando serviços...</p>
             ) : services.length > 0 ? (
                services.map((service) => (
-                  <div key={service.name} className="w-full max-w-sm mb-4">
+                  <div key={service.id} className="w-full max-w-sm mb-4">
                      <Card className="h-full flex flex-col">
                         <CardHeader className="p-4">
                            <div className="flex items-center justify-between">
@@ -89,7 +92,12 @@ const Services = ({ barberShopId }: { barberShopId: string }) => {
                            </div>
                         </CardContent>
                         <CardFooter className="p-4">
-                           <Button className="w-full">Agendar</Button>
+                           <Button
+                              className="w-full"
+                              onClick={() => handleBooking(service.id)} // Passe o service.id aqui
+                           >
+                              Agendar
+                           </Button>
                         </CardFooter>
                      </Card>
                   </div>

@@ -1,14 +1,16 @@
 'use client'
+import dynamic from 'next/dynamic'; // Importando dynamic do Next.js
 import { useState } from 'react';
-import Calendar from 'react-calendar';
 import { isToday, isBefore, subDays, isSameDay, getDay } from 'date-fns'; // Importando getDay do date-fns
-import '../../CSS/calendar.css'; // Importando o CSS
+import '@/app/CSS/calendar.css'; // Importando o CSS
+
+const Calendar = dynamic(() => import('react-calendar'), { ssr: false }); // Garantindo que o Calendar só seja renderizado no cliente
 
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-const MeuCalendario = () => {
+const CalendarBooking = () => {
    const [value, onChange] = useState<Value>(new Date()); // Estado para armazenar a data selecionada
 
    // Calcula a data de ontem
@@ -72,4 +74,4 @@ const MeuCalendario = () => {
    );
 }
 
-export default MeuCalendario;
+export default CalendarBooking;

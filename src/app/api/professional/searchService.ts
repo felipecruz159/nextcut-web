@@ -21,6 +21,16 @@ export const searchServiceClient = async (barberShopId: string) => {
    }
 };
 
+export const searchServiceById = async (serviceId: string) => {
+   try {
+      const response = await axiosInstance.get(`/service/${serviceId}`);
+      return response.data;
+   } catch (error) {
+      console.error("Erro ao buscar serviços:", error);
+      return [];
+   }
+};
+
 export const searchInformationClient = async (barberShopId: string) => {
    try {
       const response = await axiosInstance.get(`information/client/${barberShopId}`);

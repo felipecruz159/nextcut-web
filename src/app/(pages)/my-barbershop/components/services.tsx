@@ -12,6 +12,7 @@ import { searchService, deleteService } from "@/app/api/professional/searchServi
 import { ServiceFormData } from "@/app/types/generic";
 import { toast } from "sonner";
 import { updateService } from "@/app/api/professional/register/registerService";
+import ButtonNewService from "./buttonNewService";
 
 const Services = () => {
    const { user } = useUser();
@@ -75,6 +76,9 @@ const Services = () => {
 
    return (
       <div className="mb-24">
+         <div className="mb-4">
+            <ButtonNewService onServiceAdded={() => fetchServices()} />
+         </div>
          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {isLoading ? (
                <p>Carregando serviços...</p>

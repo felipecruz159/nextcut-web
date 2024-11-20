@@ -19,7 +19,6 @@ const Operation = () => {
    const barberShopId = user?.barbershops?.id;
 
    const [schedules, setSchedules] = useState<Schedule[]>([]);
-   const [loading, setLoading] = useState(true);
    const [selectedPeriod, setSelectedPeriod] = useState<Period | null>(null); // Atualizado
 
    const formatHour = (time: string) =>
@@ -43,7 +42,6 @@ const Operation = () => {
          const fetchSchedules = async () => {
             const fetchedSchedules = await getTimeService(barberShopId);
             setSchedules(fetchedSchedules);
-            setLoading(false);
          };
 
          fetchSchedules();
@@ -52,10 +50,6 @@ const Operation = () => {
 
    if (!barberShopId) {
       return <p>Carregando informações da barbearia...</p>;
-   }
-
-   if (loading) {
-      return <p>Carregando horários...</p>;
    }
 
    return (
