@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import AlternativeHeader from "@/app/_components/alternativeHeader";
 import { Button } from "@/app/_components/ui/button";
@@ -12,6 +12,8 @@ import { searchServiceById } from "@/app/api/professional/searchService";
 import { ServiceFormData } from "@/app/types/generic";
 import { useForm, Controller } from "react-hook-form";
 import { Checkbox } from "@/app/_components/ui/checkbox";
+import { useUser } from "@/app/context/user";
+import { booking } from "@/app/api/booking/booking";
 
 type Schedule = {
    id: string;
@@ -19,12 +21,26 @@ type Schedule = {
    available: boolean;
 };
 
-type Period = 'manhã' | 'tarde' | 'noite';
+interface BookingPayload {
+   barberShopId: string;
+   serviceId: string;
+   userId: string | undefined;
+   status: string;
+   time: string;
+   date: Date;
+   paymentMethod: string;
+   isSpecial: boolean;
+   serviceLocation: "local" | "domicile";
+}
+
+type Period = "manhã" | "tarde" | "noite";
 
 const Booking = ({ params }: { params: { barberShopId: string; serviceId: string } }) => {
+   const { user } = useUser();
    const { barberShopId, serviceId } = params;
    const router = useRouter();
    const [schedules, setSchedules] = useState<Schedule[]>([]);
+   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
    const [service, setService] = useState<ServiceFormData | undefined>();
    const [selectedPeriod, setSelectedPeriod] = useState<Period | null>(null);
    const [selectedSchedule, setSelectedSchedule] = useState<Schedule | null>(null);
@@ -34,26 +50,26 @@ const Booking = ({ params }: { params: { barberShopId: string; serviceId: string
       defaultValues: {
          localService: "",
          domicileService: "",
-         specialService: true
-      }
+         specialService: true,
+      },
    });
 
    const formatHour = (time: string) => {
       const date = new Date(time);
-      return date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', hour12: false });
+      return date.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", hour12: false });
    };
 
    const getPeriod = (time: string): Period => {
       const hour = new Date(time).getHours();
-      if (hour < 12) return 'manhã';
-      if (hour < 18) return 'tarde';
-      return 'noite';
+      if (hour < 12) return "manhã";
+      if (hour < 18) return "tarde";
+      return "noite";
    };
 
    const periods: Record<Period, Schedule[]> = {
-      manhã: (schedules || []).filter(schedule => getPeriod(schedule.time) === 'manhã'),
-      tarde: (schedules || []).filter(schedule => getPeriod(schedule.time) === 'tarde'),
-      noite: (schedules || []).filter(schedule => getPeriod(schedule.time) === 'noite'),
+      manhã: (schedules || []).filter((schedule) => getPeriod(schedule.time) === "manhã"),
+      tarde: (schedules || []).filter((schedule) => getPeriod(schedule.time) === "tarde"),
+      noite: (schedules || []).filter((schedule) => getPeriod(schedule.time) === "noite"),
    };
 
    useEffect(() => {
@@ -79,25 +95,44 @@ const Booking = ({ params }: { params: { barberShopId: string; serviceId: string
       fetchServices();
    }, [serviceId]);
 
-   const handleBooking = (data: any) => {
-      if (!selectedSchedule) {
+   const handleBooking = async (data: any) => {
+      if (!selectedDate) {
+         alert("Por favor, selecione uma data");
+         return;
+      }
+
+      if (!selectedSchedule || !selectedSchedule.time) {
          alert("Por favor, selecione um horário");
          return;
       }
 
-      console.log("Horário Selecionado:", formatHour(selectedSchedule.time));
-      console.log("Período Selecionado:", selectedPeriod);
-      console.log("Atendimento Local:", data.localService);
-      console.log("Atendimento Domicílio:", data.domicileService);
-      console.log("Atendimento Especial:", data.specialService);
+      try {
+         const bookingPayload: BookingPayload = {
+            barberShopId,
+            serviceId,
+            userId: user?.id,
+            status: "pending",
+            time: formatHour(selectedSchedule.time),
+            date: selectedDate,
+            paymentMethod: "Dinheiro",
+            isSpecial: data.specialService,
+            serviceLocation: data.localService === "true" ? "local" : "domicile",
+         };
+
+         const response = await booking(bookingPayload);
+         console.log(response);
+      } catch (error) {
+         console.error("Erro ao fazer a reserva:", error);
+         alert("Ocorreu um erro. Tente novamente.");
+      }
    };
 
    const handleServiceChange = (name: "localService" | "domicileService", value: string) => {
-      if (name === 'localService' && value === 'true') {
-         setValue('domicileService', '');
+      if (name === "localService" && value === "true") {
+         setValue("domicileService", "");
       }
-      if (name === 'domicileService' && value === 'true') {
-         setValue('localService', '');
+      if (name === "domicileService" && value === "true") {
+         setValue("localService", "");
       }
       setValue(name, value);
    };
@@ -109,7 +144,7 @@ const Booking = ({ params }: { params: { barberShopId: string; serviceId: string
             <BarberUser barberShopId={barberShopId} />
          </div>
          <div className="max-w-[700px] m-auto mb-6">
-            <CalendarBooking />
+            <CalendarBooking onDateChange={setSelectedDate} />
          </div>
 
          <div className="mb-4">
