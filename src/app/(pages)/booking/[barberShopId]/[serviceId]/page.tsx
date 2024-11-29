@@ -106,14 +106,19 @@ const Booking = ({ params }: { params: { barberShopId: string; serviceId: string
          return;
       }
 
+      const time = new Date(selectedSchedule.time).toISOString().split('T')[1];
+      const baseDate = new Date(selectedDate); 
+
+      const scheduledDate = new Date(`${baseDate.toISOString().split('T')[0]}T${time}`);
+
       try {
          const bookingPayload: BookingPayload = {
             barberShopId,
             serviceId,
             userId: user?.id,
-            status: "pending",
+            status: "Pendente",
             time: formatHour(selectedSchedule.time),
-            date: selectedDate,
+            date: scheduledDate,
             paymentMethod: "Dinheiro",
             isSpecial: data.specialService,
             serviceLocation: data.localService === "true" ? "local" : "domicile",
@@ -173,7 +178,7 @@ const Booking = ({ params }: { params: { barberShopId: string; serviceId: string
                            onClick={() => setSelectedSchedule(schedule)}
                            disabled={!schedule.available}
                            className={`w-[70px] ${schedule.available ? '' : 'opacity-50 cursor-not-allowed'} 
-                           ${selectedSchedule?.id === schedule.id ? 'bg-blue-500 text-white' : ''}`}
+                           ${selectedSchedule?.id === schedule.id ? 'bg-primary text-white' : 'bg-transparent border-primary rounded-lg border'}`}
                         >
                            {formatHour(schedule.time)}
                         </Button>
