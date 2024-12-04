@@ -11,6 +11,16 @@ import {
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Ibarber, ServiceFormData } from "../types/generic";
+import { EllipsisVertical } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import RatingModal from "./ratingModal";
+import { getRating } from "../api/rating/getRating";
 
 interface HistoryProps {
   email?: string;
@@ -32,6 +42,9 @@ export interface Bookings {
 export const History = ({ email }: HistoryProps) => {
   const [bookings, setBookings] = useState<Bookings[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedBooking, setSelectedBooking] = useState('');
+  const [rated, setRated] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (email) {
@@ -49,28 +62,39 @@ export const History = ({ email }: HistoryProps) => {
     }
   }, [email]);
 
+  const handleOpenModal = (bookingId: string) => {
+    setSelectedBooking(bookingId);
+    setIsModalOpen(true);
+  };
+
+
+
   if (loading) {
-    return <p>Carregando...</p>; 
+    return <p>Carregando...</p>;
+  }
+
+  const verifyRating = (bookingId: string) => {
+    const alreadyRated = !!getRating({ id: bookingId });
+    console.log(bookingId);
+    console.log(alreadyRated);
+    if (alreadyRated) {
+      setRated(true);
+    }
   }
 
   const getStatusStyle = (status: string) => {
     switch (status) {
-        case 'Pago':
-            return {
-                color: '#1acb44',
-            };
-        case 'Pendente':
-            return {
-                color: '#e9b106',
-            };
-        case 'Cancelado':
-            return {
-                color: '#cd061a',
-            };
-        default:
-            return {};
+      case "Pago":
+        return { color: "#1acb44" };
+      case "Pendente":
+        return { color: "#e9b106" };
+      case "Cancelado":
+        return { color: "#cd061a" };
+      default:
+        return {};
     }
-};
+  };
+
   return (
     <>
       <Table>
@@ -86,11 +110,13 @@ export const History = ({ email }: HistoryProps) => {
         </TableHeader>
         <TableBody>
           {bookings.map((booking) => (
-            <TableRow className="whitespace-nowrap" key={booking.id}>
+            <TableRow className="whitespace-nowrap" key={booking.id} onClick={() => verifyRating(booking.id)}>
               <TableCell className="font-medium">
                 {booking.barbershop.name}
               </TableCell>
-              <TableCell style={getStatusStyle(booking.status)}>{booking.status}</TableCell>
+              <TableCell style={getStatusStyle(booking.status)}>
+                {booking.status}
+              </TableCell>
               <TableCell>
                 {format(new Date(booking.date), "p, dd/MM/yyyy", {
                   locale: ptBR,
@@ -104,10 +130,32 @@ export const History = ({ email }: HistoryProps) => {
                   currency: "BRL",
                 }).format(booking.service.price)}
               </TableCell>
+              <TableCell className="text-muted-foreground" >
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <EllipsisVertical />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56">
+                    <DropdownMenuGroup>
+                      {booking.status === 'Pago' && !rated && (
+                        <DropdownMenuItem onClick={() => handleOpenModal(booking.id)}>
+                          <span>Avaliar</span>
+                        </DropdownMenuItem>
+                      )}
+                      <DropdownMenuItem>
+                        <span>Ver detalhes</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+
+      {/* Modal */}
+      <RatingModal open={isModalOpen} onOpenChange={setIsModalOpen} bookingId={selectedBooking} />
     </>
   );
 };

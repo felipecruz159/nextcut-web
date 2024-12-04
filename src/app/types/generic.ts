@@ -18,6 +18,7 @@ export interface Ibarber {
    appraiser: number;
    Rating: Rating;
    User: UserType
+   rating: number;
 }
 
 export interface UserType {

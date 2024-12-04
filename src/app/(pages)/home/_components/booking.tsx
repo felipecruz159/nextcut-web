@@ -16,7 +16,6 @@ import { useEffect, useState } from "react";
 import { Bookings } from "@/app/_components/history";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { createDropdownMenuScope } from "@radix-ui/react-dropdown-menu";
 
 type ScreenOptions = "services" | "schedulings";
 

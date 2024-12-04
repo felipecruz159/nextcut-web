@@ -14,6 +14,7 @@ import { useForm, Controller } from "react-hook-form";
 import { Checkbox } from "@/app/_components/ui/checkbox";
 import { useUser } from "@/app/context/user";
 import { booking } from "@/app/api/booking/booking";
+import { toast } from "sonner";
 
 type Schedule = {
    id: string;
@@ -126,6 +127,8 @@ const Booking = ({ params }: { params: { barberShopId: string; serviceId: string
 
          const response = await booking(bookingPayload);
          console.log(response);
+         toast.success("Agendado com sucesso!");
+         router.push('/')
       } catch (error) {
          console.error("Erro ao fazer a reserva:", error);
          alert("Ocorreu um erro. Tente novamente.");
