@@ -1,75 +1,95 @@
 /* Ajusta o layout do calendário */
 .react-calendar {
-   max-width: 100%;
-   background-color: transparent;
-   border: none;
-   color: #fff;
-   text-align: center;
-   margin-top: 5px;
-   /* Remover gap para evitar problemas de layout */
+  max-width: 100%;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  text-align: center;
+  margin-top: 5px;
+  font-size: 1.2rem; /* Tamanho geral da fonte */
 }
 
 /* Ajusta o estilo dos dias */
 .react-calendar__tile {
-   height: 100px;
-   max-height: 100px;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   background-color: transparent;
-   color: #ffffff;
-   border-radius: 8px;
-   padding: 0;
-   margin-top: 5px;
-   /* Ajusta o espaçamento vertical */
-   /* Ajusta o espaçamento horizontal entre os dias */
-   flex: 0 0 0;
-   /* Garante que o dia ocupe o tamanho adequado */
+  height: 100px;
+  max-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 0;
+  margin-top: 5px;
+  flex: 0 0 0;
+  font-size: 1.7rem; /* Tamanho da fonte dos números dos dias */
 }
 
 /* Estilo do dia selecionado */
 .react-calendar__tile--active {
-   background-color: rgba(255, 102, 0, 0.9);
-   color: white;
-   font-weight: bold;
-   box-shadow: 0px 0px 10px 5px rgba(255, 102, 0, 1);
-   transform: scale(1.01);
-   transition: all 0.3s ease;
+  background-color: rgba(255, 102, 0, 0.9);
+  color: white;
+  font-weight: bold;
+  box-shadow: 0px 0px 10px 5px rgba(255, 102, 0, 1);
+  transform: scale(1.01);
+  transition: all 0.3s ease;
+  font-size: 1.7rem; /* Tamanho da fonte do dia selecionado */
 }
 
 /* Estilo do dia atual */
 .react-calendar__tile--today {
-   background-color: rgba(255, 102, 0, 1);
-   color: white;
-   font-weight: bolder;
+  background-color: rgba(255, 102, 0, 1);
+  color: white;
+  font-weight: bolder;
+  font-size: 1.7rem; /* Tamanho da fonte do dia atual */
 }
 
 /* Estilo dos dias desabilitados */
 .react-calendar__tile--disabled {
-   background-color: transparent;
-   color: #a70000;
-   cursor: not-allowed;
+  background-color: transparent;
+  color: #515151;
+  cursor: not-allowed;
 }
 
-/* Botões de navegação */
+/* Cabeçalho do calendário (navegação) */
+.react-calendar__navigation {
+  font-size: 1.7rem; /* Tamanho da fonte do mês e ano */
+}
+
 .react-calendar__navigation button {
-   background-color: transparent;
-   color: #fff;
-   border: none;
-   margin-bottom: 20px;
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid gray;
+  border-radius: 10px;
+  padding: 2px 20px;
+  margin: 5px;
+  margin-bottom: 20px;
 }
 
 .react-calendar__navigation button:hover {
-   background-color: rgba(255, 102, 0, 0.8);
+  background-color: rgba(255, 102, 0, 0.8);
+}
+
+/* Cabeçalho dos dias da semana */
+
+.react-calendar__month-view__weekdays {
+  font-size: 1.2rem; /* Tamanho da fonte dos dias da semana */
+}
+
+.react-calendar__month-view__weekdays abbr {
+  text-transform: capitalize; /* Capitaliza as primeiras letras */
+  text-decoration: none; /* Remove o sublinhado */
+  cursor: default; /* Opcional: ajusta o cursor para não parecer clicável */
 }
 
 /* Responsividade */
 @media (max-width: 600px) {
-   .react-calendar {
-      width: 100%;
-   }
+  .react-calendar {
+    width: 100%;
+  }
 
-   .react-calendar__tile {
-      height: 70px;
-   }
+  .react-calendar__tile {
+    height: 70px;
+    font-size: 1rem; /* Ajusta o tamanho da fonte em telas menores */
+  }
 }

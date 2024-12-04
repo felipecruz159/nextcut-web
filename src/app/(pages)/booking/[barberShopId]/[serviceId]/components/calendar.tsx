@@ -44,6 +44,8 @@ const CalendarBooking = ({ onDateChange }: { onDateChange: (date: Date | null) =
             className="react-calendar"
             tileClassName={tileClassName}
             tileDisabled={tileDisabled}
+            locale='PT'
+            calendarType="gregory"
          />
       </div>
    );

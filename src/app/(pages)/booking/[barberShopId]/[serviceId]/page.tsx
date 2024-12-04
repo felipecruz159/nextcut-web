@@ -107,7 +107,7 @@ const Booking = ({ params }: { params: { barberShopId: string; serviceId: string
       }
 
       const time = new Date(selectedSchedule.time).toISOString().split('T')[1];
-      const baseDate = new Date(selectedDate); 
+      const baseDate = new Date(selectedDate);
 
       const scheduledDate = new Date(`${baseDate.toISOString().split('T')[0]}T${time}`);
 
@@ -143,7 +143,7 @@ const Booking = ({ params }: { params: { barberShopId: string; serviceId: string
    };
 
    return (
-      <div className="container">
+      <div className="w-[600px] m-auto">
          <AlternativeHeader variant="title" title="Agendamento" />
          <div className="mb-4">
             <BarberUser barberShopId={barberShopId} />
