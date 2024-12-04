@@ -60,7 +60,7 @@ const MainMenu: React.FC<SideMenuProps> = ({ onNavigate }) => {
         variant="outline"
         className="w-full gap-2 justify-start border-none"
       >
-        <Link href="/agenda">
+        <Link href="/agenda" className="pointer-events-none">
           <CalendarClock size={20} /> Agenda
         </Link>
       </Button>
