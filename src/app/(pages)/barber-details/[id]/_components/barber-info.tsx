@@ -74,7 +74,7 @@ const BarberInfo = ({ params }: { params: { id: string } }) => {
                         </div>
                         <div className="flex flex-row gap-2 items-center">
                            <Star size={18} className="text-primary" />
-                           <p className="text-sm"></p>
+                           <p className="text-sm">{barber.rating.toString() !== '0' ? barber.rating.toFixed(1) : ''}<span className="text-sm text-muted-foreground ms-2">{barber.appraiser} avaliações </span></p>
                         </div>
                      </div>
                      <div className="flex flex-col gap-2">

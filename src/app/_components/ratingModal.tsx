@@ -10,6 +10,7 @@ import HalfRating from "./mui/rating";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { rating } from "../api/rating/rating";
+import { toast } from "sonner";
 
 type RatingModalProps = {
     open: boolean;
@@ -47,6 +48,7 @@ const RatingModal = ({ open, onOpenChange, bookingId }: RatingModalProps) => {
             console.error(err);
         }
 
+        toast.success('Sua avaliação foi enviada com sucesso.');
         onOpenChange(false);
     };
 

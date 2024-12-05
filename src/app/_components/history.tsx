@@ -77,12 +77,16 @@ export const History = ({ email }: HistoryProps) => {
     return <p>Carregando...</p>;
   }
 
-  const verifyRating = (bookingId: string) => {
-    const alreadyRated = !!getRating({ id: bookingId });
-    if (alreadyRated) {
-      setRated(true);
+  const verifyRating = async (bookingId: string) => {
+    try {
+      const rating = await getRating({ id: bookingId });
+      console.log('rating:', rating);
+      setRated(!!rating);
+    } catch (error) {
+      console.error('Erro ao verificar avaliação:', error);
     }
-  }
+  };
+
 
   const getStatusStyle = (status: string) => {
     switch (status) {
@@ -95,6 +99,18 @@ export const History = ({ email }: HistoryProps) => {
       default:
         return {};
     }
+  };
+
+  const RenderRatingComponent = async (status: string, bookingId: string) => {
+    await verifyRating(bookingId);
+    if (status === 'Pago' && !rated) {
+      return (
+        <DropdownMenuItem onClick={() => handleOpenModal(bookingId)}>
+          <span>Avaliar</span>
+        </DropdownMenuItem>
+      );
+    }
+    return null;
   };
 
   return (
@@ -134,16 +150,12 @@ export const History = ({ email }: HistoryProps) => {
               </TableCell>
               <TableCell className="text-muted-foreground" >
                 <DropdownMenu>
-                  <DropdownMenuTrigger>
+                  <DropdownMenuTrigger >
                     <EllipsisVertical />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-56">
                     <DropdownMenuGroup>
-                      {booking.status === 'Pago' && !rated && (
-                        <DropdownMenuItem onClick={() => handleOpenModal(booking.id)}>
-                          <span>Avaliar</span>
-                        </DropdownMenuItem>
-                      )}
+                      {RenderRatingComponent(booking.status, booking.id)}
                       <DropdownMenuItem>
                         <span>Ver detalhes</span>
                       </DropdownMenuItem>
