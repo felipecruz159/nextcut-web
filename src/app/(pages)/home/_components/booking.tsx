@@ -33,12 +33,18 @@ const BookingItem = () => {
   const [bookings, setBookings] = useState<Bookings[]>([]);
   const [screen, setScreen] = useState<ScreenOptions>('services');
   const [isCancelDialogOpen, setCancelDialogOpen] = useState(false);
+  const [IsLoading, setIsLoading] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState<Bookings | null>(null);
 
   useEffect(() => {
     const fetchBookings = async () => {
       if (user?.email) {
+        setIsLoading(true); // Inicia o carregamento
+
         const bookingsData = await getNextBookings({ email: user.email });
+        // console.log(bookingsData.combinedBookings);
+
+        // TODO: Add loading
 
         let filteredBookings = bookingsData.combinedBookings;
 
@@ -51,6 +57,10 @@ const BookingItem = () => {
         if (filteredBookings.length > 0) {
           setBookings(filteredBookings);
         }
+
+        setIsLoading(false); // Finaliza o carregamento
+      } else {
+        setIsLoading(false); // Finaliza o carregamento caso não tenha email
       }
     };
 

@@ -132,7 +132,7 @@ export default function SignupForm() {
           )}
         />
         <p className="text-xs leading-none font-light">
-          Eu concordo com os <Link href="" className="p-0 text-xs text-primary cursor-pointer">Termos de serviço</Link> e <Link href="" className="p-0 text-xs text-primary cursor-pointer">Política de Privacidade</Link>
+          Eu concordo com os <a href="/assets/pdf/Termos de Serviço.pdf" target="_blank" className="p-0 text-xs text-primary cursor-pointer">Termos de serviço</a> e <a href="/assets/pdf/Politica de Privacidade.pdf" target="_blank" className="p-0 text-xs text-primary cursor-pointer">Política de Privacidade</a>
         </p>
       </div>
 

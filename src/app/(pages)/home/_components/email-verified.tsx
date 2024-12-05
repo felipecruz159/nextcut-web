@@ -48,10 +48,10 @@ const VerifiedEmail = () => {
   return (
     <>
       {isVisible && (
-        <div className="bg-primary flex justify-evenly items-center w-full h-6 p-2">
+        <div className="bg-primary flex justify-evenly items-center w-full h-auto p-2">
           <div className="flex gap-2 items-center">
             <Mail />
-            <p className="text-white">Por favor verifique o seu email clicando no botão ao lado!</p>
+            <p className="text-white text-sm">Verifique o seu email aqui!</p>
           </div>
           <div className="flex items-center">
             <Button
