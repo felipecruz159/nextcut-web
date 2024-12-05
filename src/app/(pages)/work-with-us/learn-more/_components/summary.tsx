@@ -14,7 +14,11 @@ import {
   Zap,
 } from "lucide-react";
 import Value from "../types/Values";
+import { useState } from "react";
+import { countBarbershops } from "@/app/api/professional/barberShops";
 const Summary = () => {
+  const [count, setCount] = useState();
+
   const paths: string[] = [
     "https://instagram.com",
     "https://youtube.com",
@@ -61,6 +65,11 @@ const Summary = () => {
       icon: <Zap />,
     },
   ];
+
+  useState(async () => {
+    const barbershops = await countBarbershops();
+    setCount(barbershops);
+  })
 
   const isPathFilled: boolean = paths.length > 0 ? true : false;
 
@@ -119,7 +128,7 @@ const Summary = () => {
           </div>
           <div className="w-full lg:w-2/4 bg-primary rounded-3xl m-1 p-2 border-transparent flex flex-col items-center">
             <div className="flex-grow flex flex-col items-center justify-center">
-              <h1 className="font-bold text-center text-5xl">0+</h1>
+              <h1 className="font-bold text-center text-5xl">{count}+</h1>
               <p className="text-base text-center">Estabelecimentos cadastrados</p>
             </div>
           </div>

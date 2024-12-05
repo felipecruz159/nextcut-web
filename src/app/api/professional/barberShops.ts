@@ -9,3 +9,13 @@ export const fetchBarbershops = async () => {
       throw new Error("Failed to fetch barbershops");
    }
 };
+
+export const countBarbershops = async () => {
+   try {
+      const res = await axiosInstance.get('/count-barbershops/');
+      return res.data;
+   } catch (err) {
+      console.error("Failed to count barbershops:", err);
+      throw new Error("Failed to count barbershops");
+   }
+}
