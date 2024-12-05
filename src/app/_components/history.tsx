@@ -62,12 +62,16 @@ export const History = ({ email }: HistoryProps) => {
     }
   }, [email]);
 
+  useEffect(() => {
+    if (!isModalOpen) {
+      setRated(false);
+    }
+  }, [isModalOpen]);
+
   const handleOpenModal = (bookingId: string) => {
     setSelectedBooking(bookingId);
     setIsModalOpen(true);
   };
-
-
 
   if (loading) {
     return <p>Carregando...</p>;
@@ -75,8 +79,6 @@ export const History = ({ email }: HistoryProps) => {
 
   const verifyRating = (bookingId: string) => {
     const alreadyRated = !!getRating({ id: bookingId });
-    console.log(bookingId);
-    console.log(alreadyRated);
     if (alreadyRated) {
       setRated(true);
     }
