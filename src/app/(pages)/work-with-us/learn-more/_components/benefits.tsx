@@ -1,18 +1,18 @@
-"use client";
-import { Button } from "@/app/_components/ui/button";
-import Image from "next/image";
-import Link from "next/link";
-import { useRef } from "react";
-import Summary from "./summary";
-import { BenefitsList } from "./benefits-list";
-import YouTubeEmbed from "@/app/_components/YoutubeEmbed";
+'use client';
+import { Button } from '@/app/_components/ui/button';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRef } from 'react';
+import Summary from './summary';
+import { BenefitsList } from './benefits-list';
+import YouTubeEmbed from '@/app/_components/YoutubeEmbed';
 
 const Benefits = () => {
   const benefitsRef = useRef<HTMLDivElement>(null);
 
   const scrollToBenefits = () => {
     if (benefitsRef.current) {
-      benefitsRef.current.scrollIntoView({ behavior: "smooth" });
+      benefitsRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
   return (
@@ -57,11 +57,11 @@ const Benefits = () => {
         <div className="bg-[#000]">
           <div className="container flex flex-wrap justify-center p-5">
             <YouTubeEmbed
-              src="https://www.youtube.com/embed/QFpqQZyjZJ8?si=bUxUAUDB-SDj-GzE"
+              src="https://www.youtube.com/embed/_GSc3uAm8rQ?si=a3nSoefs1hMFwAYt"
               title="Apresentação Nextcut"
             />
             <YouTubeEmbed
-              src="https://www.youtube.com/embed/UezMv9nkK8M?si=eL_5Xa5oALoXG8rw"
+              src="https://www.youtube.com/embed/Jr5-jrvhZj8?si=gP2A4IH9BZWxaixR"
               title="Apresentação Nextcut"
             />
           </div>

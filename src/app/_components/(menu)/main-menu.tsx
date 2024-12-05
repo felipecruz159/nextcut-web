@@ -6,13 +6,13 @@ import {
   Heart,
   Store,
   Building,
-  User2
-} from "lucide-react";
-import Link from "next/link";
-import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
-import { SideMenuProps } from "../../types/client/sideMenu";
-import { useUser } from "@/app/context//user";
+  User2,
+} from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '../ui/button';
+import { Separator } from '../ui/separator';
+import { SideMenuProps } from '../../types/client/sideMenu';
+import { useUser } from '@/app/context//user';
 
 const MainMenu: React.FC<SideMenuProps> = ({ onNavigate }) => {
   const { user, loading } = useUser();
@@ -34,16 +34,16 @@ const MainMenu: React.FC<SideMenuProps> = ({ onNavigate }) => {
       </Button>
 
       <Button
-      asChild
-      variant="outline"
-      className="w-full gap-2 justify-start border-none"
-    >
-      <Link href="/profile">
-        <User2 size={20} /> Perfil
-      </Link>
-    </Button>
+        asChild
+        variant="outline"
+        className="w-full gap-2 justify-start border-none"
+      >
+        <Link href="/profile">
+          <User2 size={20} /> Perfil
+        </Link>
+      </Button>
 
-      {user?.type === "professional" && (
+      {user?.type === 'professional' && (
         <Button
           asChild
           variant="outline"
@@ -81,7 +81,7 @@ const MainMenu: React.FC<SideMenuProps> = ({ onNavigate }) => {
           asChild
           variant="outline"
           className="w-full gap-2 justify-start border-none"
-          onClick={() => onNavigate("HELP")}
+          onClick={() => onNavigate('HELP')}
         >
           <Link href="#">
             <HelpCircle size={20} /> Ajuda
@@ -92,7 +92,7 @@ const MainMenu: React.FC<SideMenuProps> = ({ onNavigate }) => {
           asChild
           variant="outline"
           className="w-full gap-2 justify-start border-none"
-          onClick={() => onNavigate("SETTINGS")}
+          onClick={() => onNavigate('SETTINGS')}
         >
           <Link href="#">
             <Settings size={20} /> Configurações
@@ -104,7 +104,7 @@ const MainMenu: React.FC<SideMenuProps> = ({ onNavigate }) => {
           variant="outline"
           className="w-full gap-2 justify-start border-none"
         >
-          <Link href="#">
+          <Link href="/work-with-us">
             <Store size={20} /> Sugerir estabelecimentos
           </Link>
         </Button>
