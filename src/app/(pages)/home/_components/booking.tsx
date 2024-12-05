@@ -24,15 +24,15 @@ const BookingItem = () => {
 
   const [bookings, setBookings] = useState<Bookings[]>([]);
   const [screen, setScreen] = useState<ScreenOptions>("services");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+
     const fetchBookings = async () => {
       if (user?.email) {
+        setIsLoading(true); // Inicia o carregamento
+
         const bookingsData = await getNextBookings({ email: user.email });
-        // console.log(bookingsData.combinedBookings);
-
-        // TODO: Add loading
-
         let filteredBookings = bookingsData.combinedBookings;
 
         if (screen === "schedulings") {
@@ -44,6 +44,10 @@ const BookingItem = () => {
         if (filteredBookings.length > 0) {
           setBookings(filteredBookings);
         }
+
+        setIsLoading(false); // Finaliza o carregamento
+      } else {
+        setIsLoading(false); // Finaliza o carregamento caso não tenha email
       }
     };
 
@@ -85,8 +89,13 @@ const BookingItem = () => {
     </div>
   );
 
+  if (isLoading) {
+    return <div>Carregando...</div>;
+  }
+  
   // FIXME: // ! Adjust frontend when change screen
   return bookings.length > 0 ? (
+    
     <div className="h-full overflow-auto p-2 gap-1">
       {/* // ? Show price? */}
       {/* // TODO: Create a "see details" button */}
