@@ -1,24 +1,24 @@
-"use client";
-import { Button } from "@/app/_components/ui/button";
-import { useUser } from "@/app/context/user";
-import { Input } from "@ui/input";
-import { Label } from "@ui/label";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import InputMask from "react-input-mask";
-import { axiosInstance } from "@/app/_helpers/axios-instance";
+'use client';
+import { Button } from '@/app/_components/ui/button';
+import { useUser } from '@/app/context/user';
+import { Input } from '@ui/input';
+import { Label } from '@ui/label';
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
+import InputMask from 'react-input-mask';
+import { axiosInstance } from '@/app/_helpers/axios-instance';
 
 export const AccountInfoForm = () => {
-  const [email, setEmail] = useState<string>("");
-  const [name, setName] = useState<string>("");
-  const [phone, setPhone] = useState<string | null>("");
-  const [cep, setCep] = useState<string>("");
-  const [neighborhood, setNeighborhood] = useState<string>("");
-  const [street, setStreet] = useState<string>("");
-  const [number, setNumber] = useState<string>("");
-  const [state, setState] = useState<string>("");
-  const [city, setCity] = useState<string>("");
-  const [error, setError] = useState<string>("");
+  const [email, setEmail] = useState<string>('');
+  const [name, setName] = useState<string>('');
+  const [phone, setPhone] = useState<string | null>('');
+  const [cep, setCep] = useState<string | null>('');
+  const [neighborhood, setNeighborhood] = useState<string>('');
+  const [street, setStreet] = useState<string>('');
+  const [number, setNumber] = useState<string>('');
+  const [state, setState] = useState<string>('');
+  const [city, setCity] = useState<string>('');
+  const [error, setError] = useState<string>('');
   const { user } = useUser();
 
   useEffect(() => {
@@ -26,49 +26,48 @@ export const AccountInfoForm = () => {
     setEmail(user.email);
     setName(user.name);
     setPhone(user.phone);
-    setCep(user.address.zipCode);
+    setCep(user?.address?.zipCode || null);
 
-    if (cep){
+    if (cep) {
       fetchAddress(cep);
       setNumber(user.address.number.toString());
     }
-
   }, [user]);
 
   const fetchAddress = async (cep: string) => {
-    if (cep.replace(/\D/g, "").length !== 8) return;
+    if (cep.replace(/\D/g, '').length !== 8) return;
 
     try {
       const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
       const data = await response.json();
 
       if (data.erro) {
-        toast.error("CEP inválido!");
+        toast.error('CEP inválido!');
         return;
       }
 
-      setNeighborhood(data.bairro || "");
-      setStreet(data.logradouro || "");
-      setState(data.uf || "");
-      setCity(data.localidade || "");
+      setNeighborhood(data.bairro || '');
+      setStreet(data.logradouro || '');
+      setState(data.uf || '');
+      setCity(data.localidade || '');
     } catch (err) {
-      toast.error("Erro ao buscar endereço. Tente novamente.");
+      toast.error('Erro ao buscar endereço. Tente novamente.');
     }
   };
 
   useEffect(() => {
-    fetchAddress(cep);
+    fetchAddress(cep ?? '');
   }, [cep]);
 
   const changeAccountData = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!name) {
-      setError("Por favor, preencha todos os campos obrigatórios.");
+      setError('Por favor, preencha todos os campos obrigatórios.');
       return;
     }
 
-    setError("");
+    setError('');
 
     const addressData = {
       zipCode: cep,
@@ -77,19 +76,19 @@ export const AccountInfoForm = () => {
       number: number,
       city: city,
       state: state,
-    }
+    };
 
     try {
       await axiosInstance.post(`/update-account-info`, {
         email,
         name,
         phone,
-        addressData
+        addressData,
       });
 
-      toast.success("Dados alterados com sucesso!");
+      toast.success('Dados alterados com sucesso!');
     } catch (err) {
-      toast.error("Erro ao atualizar dados.");
+      toast.error('Erro ao atualizar dados.');
     }
   };
 
@@ -131,7 +130,7 @@ export const AccountInfoForm = () => {
           id="phone"
           name="phone"
           placeholder="Telefone"
-          value={phone || ""}
+          value={phone || ''}
           onChange={(e) => setPhone(e.target.value)}
         />
       </div>
@@ -145,7 +144,7 @@ export const AccountInfoForm = () => {
           id="cep"
           name="cep"
           placeholder="CEP"
-          value={cep}
+          value={cep ?? ''}
           onChange={(e) => setCep(e.target.value)}
         />
       </div>

@@ -25,4 +25,24 @@ export const booking = async (bookingPayload: BookingPayload) => {
       }
       throw new Error("Falha ao realizar a reserva");
    }
+}
+
+export const cancelBooking = async (bookingId: string) => {
+   try {
+      const response = await axiosInstance.delete(`bookings/${bookingId}`);
+      return response.data; // Sucesso
+   } catch (error) {
+      if (error instanceof AxiosError) {
+         console.error(
+            "Erro ao cancelar o agendamento:",
+            error.response?.data || error.message
+         );
+      } else {
+         console.error("Erro inesperado:", error);
+      }
+      throw new Error("Falha ao cancelar o agendamento");
+   }
 };
+
+
+
